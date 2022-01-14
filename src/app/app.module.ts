@@ -52,6 +52,9 @@ import { TokenService } from './features/auth/services/token-service/token.servi
 import { AppComponent } from './app.component';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { RappiderNavigationBarModule } from './features/rappider/components';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 function subscribeToRouting(
   store: Store,
@@ -130,6 +133,9 @@ function initAuthentication(
 
     /* lottie module initialization */
     LottieModule.forRoot({ player: () => player }),
+    NzButtonModule,
+    NzIconModule,
+    NzToolTipModule
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US },
