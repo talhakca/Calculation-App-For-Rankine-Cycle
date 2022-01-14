@@ -1,3 +1,31 @@
-<rappider-navigation-bar brandText="SEN4992"
-                         [isBrandVisible]="true"></rappider-navigation-bar>
+<!-- <rappider-navigation-bar brandText="Talhanın Proje"
+                         [isBrandVisible]="true"></rappider-navigation-bar> -->
+<div class="navbar navbar-light bg-light p-3 mb-4">
+    <div class="navbar-brand ">
+        Talhanın Proje
+    </div>
+    <div class="navbar-right-flex">
+        <div *ngIf="!user"
+             class="navbar-right-flex">
+            <button nz-button>Login</button>
+            <button nz-button>Register</button>
+        </div>
+        <div *ngIf="user"
+             class="navbar-right-flex">
+            <button nz-button>Projects</button>
+            <div class="navbar-right-flex">
+                <h6>
+                    {{user.name}} {{user.surname}}
+                </h6>
+                <i class="logout-button"
+                   nz-icon
+                   nz-tooltip
+                   nzTooltipTitle="Logout"
+                   nzType="poweroff"
+                   nzTheme="outline"
+                   (click)="logout()"></i>
+            </div>
+        </div>
+    </div>
+</div>
 <router-outlet></router-outlet>

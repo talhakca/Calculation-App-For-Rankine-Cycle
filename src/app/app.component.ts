@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 
 import { InitApp } from 'src/app/features/data-stores/app-data-store/state/app-data-store.actions';
+import { Logout } from './features/data-stores/auth-data-store/state/auth-data-store.actions';
 
 @Component({
   selector: 'app-root',
@@ -10,9 +11,8 @@ import { InitApp } from 'src/app/features/data-stores/app-data-store/state/app-d
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  title = 'SEN4992';
-
   subscriptions: Subscription[];
+  user: any;
 
   constructor(private store: Store<any>) { }
 
@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
 
   subscribeToData() {
     this.subscriptions = [
-      this.subscribeToUser()
+      // this.subscribeToUser()
     ]
   }
 
@@ -31,7 +31,15 @@ export class AppComponent implements OnInit {
       if (user) {
         console.log('hi');
         this.store.dispatch(InitApp());
+        this.user = user;
+      } else {
+        this.user = null;
       }
     })
   }
+
+  logout() {
+    this.store.dispatch(Logout());
+  }
+
 }
