@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
 
   subscribeToData() {
     this.subscriptions = [
-      // this.subscribeToUser()
+      this.subscribeToUser()
     ]
   }
 
@@ -47,8 +47,19 @@ export class AppComponent implements OnInit {
     }
   }
 
-  logout() {
-    this.store.dispatch(Logout());
+  onClickNavbarButton(key: string) {
+    switch (key) {
+      case 'login':
+        this.router.navigate(['/auth/login']);
+      case 'register':
+        this.router.navigate(['/auth/register']);
+      case 'projects':
+        this.router.navigate(['/home']);
+      case 'logout':
+        this.store.dispatch(Logout());
+      default:
+        break;
+    }
   }
 
 }

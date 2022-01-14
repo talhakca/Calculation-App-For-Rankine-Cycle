@@ -8,12 +8,15 @@
     <div class="navbar-right-flex">
         <div *ngIf="!user"
              class="navbar-right-flex">
-            <button nz-button>Login</button>
-            <button nz-button>Register</button>
+            <button nz-button
+                    (click)="onClickNavbarButton('login')">Login</button>
+            <button nz-button
+                    (click)="onClickNavbarButton('register')">Register</button>
         </div>
         <div *ngIf="user"
              class="navbar-right-flex">
-            <button nz-button>Projects</button>
+            <button nz-button
+                    (click)="onClickNavbarButton('projects')">Projects</button>
             <div class="navbar-right-flex">
                 <h6>
                     {{user.name}} {{user.surname}}
@@ -24,7 +27,7 @@
                    nzTooltipTitle="Logout"
                    nzType="poweroff"
                    nzTheme="outline"
-                   (click)="logout()"></i>
+                   (click)="onClickNavbarButton('logout')"></i>
             </div>
         </div>
     </div>
