@@ -1,0 +1,26 @@
+[nz-menu] {
+  width: 240px;
+}
+
+:host ::ng-deep .ant-menu-submenu-title {
+  display: flex;
+  align-items: center;
+}
+
+.menu-item-icon-container {
+  display: inline-flex;
+
+  .menu-item-icon {
+    line-height: 36px;
+  }
+}
+
+.menu-tag {
+  float: right;
+  position: absolute;
+  right: 0px;
+  top: 11px;
+  font-size: x-small;
+  padding: 3px 5px;
+  line-height: 10px;
+}

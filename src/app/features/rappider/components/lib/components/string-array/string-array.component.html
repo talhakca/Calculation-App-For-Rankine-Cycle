@@ -1,0 +1,5 @@
+<rappider-row-form [columns]="CONFIG_COLUMNS"
+                   [hasInitialEmptyRow]="hasInitialEmptyRow"
+                   [(ngModel)]="mappedValue"
+                   (ngModelChange)="onValueChange($event)"
+                   (blur)="onBlur()"></rappider-row-form>

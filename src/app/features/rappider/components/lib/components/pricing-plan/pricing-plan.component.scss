@@ -1,0 +1,19 @@
+.pricing-plan {
+  background-color: #f7f7f7;
+  padding: var(--padding-8x);
+  text-align: center;
+}
+
+.title {
+  font-weight: 500;
+  font-size: var(--font-size-x-large);
+}
+
+.price {
+  font-weight: bolder;
+  font-size: var(--font-size-xx-large);
+}
+
+.button {
+  width: 80%;
+}

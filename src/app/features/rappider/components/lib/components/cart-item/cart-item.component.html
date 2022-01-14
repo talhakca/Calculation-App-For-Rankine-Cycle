@@ -1,0 +1,83 @@
+<nz-card>
+  <div class="rappider-cart-item">
+    <div *ngIf="image"
+         class="image-area">
+      <rappider-image [source]="image.source"
+                      [width]="image.width"
+                      [alternateText]="image.alternateText"></rappider-image>
+    </div>
+
+    <div *ngIf="item"
+         class="content-area">
+      <div class="title-area">
+        <div>
+          <rappider-heading *ngIf="item.title"
+                            [content]="item.title.content"
+                            [type]="item.title.type"></rappider-heading>
+          <rappider-paragraph *ngIf="item.paragraphContent"
+                              [content]="item.paragraphContent"></rappider-paragraph>
+        </div>
+
+        <div>
+          <rappider-heading *ngIf="item.additionalContent"
+                            class="price-area"
+                            [content]="item.additionalContent.content"
+                            [type]="item.additionalContent.type"></rappider-heading>
+
+          <div *ngIf="item.button"
+               class="details-button">
+            <rappider-button [text]="item.button.text"
+                             [type]="item.button.type"
+                             [shape]="item.button.shape"
+                             [size]="item.button.size"
+                             [icon]="item.button.icon"
+                             [transparent]="item.button.transparent"
+                             [loading]="item.button.loading"
+                             [block]="item.button.block"
+                             [disabled]="item.button.disabled"
+                             [colorType]="item.button.colorType"
+                             (click)="onButtonClick(item.button)"></rappider-button>
+          </div>
+        </div>
+      </div>
+
+      <div class="dropdown-area"
+           *ngIf="item.collapse">
+        <rappider-accordion [panels]="item.collapse"
+                            [bordered]="item.bordered"></rappider-accordion>
+      </div>
+
+      <div *ngIf="!item.collapse">
+        <rappider-divider [type]="divider"></rappider-divider>
+      </div>
+
+      <div *ngFor="let item of additionalItems">
+        <div class="additional-items">
+          <div *ngIf="item.iconBlock">
+            <rappider-icon-block [avatar]="item.iconBlock.avatar"
+                                 [title]="item.iconBlock.title"
+                                 [content]="item.iconBlock.content"
+                                 [mode]="item.iconBlock.mode"></rappider-icon-block>
+          </div>
+
+          <div *ngIf="item.button"
+               class="additional-item-button">
+            <rappider-button [text]="item.button.text"
+                             [type]="item.button.type"
+                             [shape]="item.button.shape"
+                             [size]="item.button.size"
+                             [icon]="item.button.icon"
+                             [transparent]="item.button.transparent"
+                             [loading]="item.button.loading"
+                             [block]="item.button.block"
+                             [disabled]="item.button.disabled"
+                             [colorType]="item.button.colorType"
+                             (click)="onButtonClick(item.button)"></rappider-button>
+          </div>
+        </div>
+
+        <rappider-divider [type]="divider"></rappider-divider>
+      </div>
+    </div>
+  </div>
+</nz-card>

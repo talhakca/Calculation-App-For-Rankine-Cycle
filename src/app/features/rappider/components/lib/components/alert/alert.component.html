@@ -1,0 +1,19 @@
+<div class="alert">
+  <nz-alert [nzType]="type"
+            [nzMessage]="title | translate"
+            [nzDescription]="descriptionArea"
+            [nzShowIcon]="showIcon"
+            [nzCloseable]="closeable">
+  </nz-alert>
+  <ng-template #descriptionArea>
+    {{ description | translate }}
+    <a *ngIf="actionConfig"
+       nz-button
+       class="button-area"
+       nzType="link"
+       [nzSize]="actionConfig.size"
+       (click)="onActionClick()">
+      {{ actionConfig.text | translate }}
+    </a>
+  </ng-template>
+</div>

@@ -1,0 +1,24 @@
+<nz-card>
+  <div class="d-flex justify-content-between align-items-center">
+    <h5>{{title}}</h5>
+  </div>
+  <div class="text-center m-v-45">
+    <nz-progress [nzPercent]="percent"
+                 [nzType]="type"
+                 [nzWidth]="width"
+                 [nzStrokeWidth]="strokeWidth"
+                 [nzFormat]="innerContentFormat"
+                 [nzStatus]="status"></nz-progress>
+  </div>
+  <div *ngIf="showBadge"
+       class="d-flex justify-content-center">
+    <nz-badge nzStatus="default"
+              [nzColor]="badgeColor"></nz-badge>
+    <span>
+      {{badgeContent1}}
+      <span *ngIf="showPercentInBadge"
+            class="font-weight-semibold">{{percent}}%</span>
+      {{badgeContent2}}
+    </span>
+  </div>
+</nz-card>

@@ -1,0 +1,1349 @@
+<nz-spin [nzSpinning]="loading">
+  <form *ngIf="config?.items?.length && dataForm"
+        nz-form
+        [nzLayout]="config.formLayout || DEFAULT_FORM_LAYOUT">
+
+    <div *ngFor="let itemSection of itemSections"
+         class="groupped-items">
+      <div *ngIf="displaySectionHeader(itemSection)"
+           class="group-title">
+        <h6> {{itemSection | translate}} </h6>
+        <hr />
+      </div>
+      <!-- INPUT COMPONENTS -->
+      <ng-container *ngFor="let item of grouppedItems[itemSection]">
+        <!-- hide invisible inputs -->
+        <ng-container *ngIf="item.visible !== false">
+          <nz-spin [nzSpinning]="item.loading">
+            <ng-container *ngTemplateOutlet="inputComponent;context:{
+              $implicit:item,
+              form: dataForm,
+              formLayout: config.formLayout || DEFAULT_FORM_LAYOUT,
+              labelComponentSize: config.itemSettings?.labelComponentSize || DEFAULT_LABEL_COMPONENT_SIZE,
+              inputComponentSize: config.itemSettings?.inputComponentSize || DEFAULT_INPUT_COMPONENT_SIZE,
+              errors: dataFormFieldErrors[item.fieldName]
+            }">
+            </ng-container>
+          </nz-spin>
+        </ng-container>
+      </ng-container>
+    </div>
+
+    <!-- SUBMIT BUTTON -->
+    <ng-container *ngIf="config.submitButton?.visible !== false">
+      <nz-form-item>
+
+        <!-- label -->
+        <ng-container *ngTemplateOutlet="label;context:{
+            title: null,
+            size: config.itemSettings?.labelComponentSize || DEFAULT_LABEL_COMPONENT_SIZE,
+            formLayout: config.formLayout || DEFAULT_FORM_LAYOUT,
+            colon: false
+          }"></ng-container>
+
+        <!-- button -->
+        <button nz-button
+                type="submit"
+                nzType="primary"
+                [nzSize]="config.submitButton?.size"
+                (click)="onFormSubmit()">
+          {{ config.submitButton?.text || DEFAULT_SUBMIT_BUTTON_TEXT | translate}}
+        </button>
+
+      </nz-form-item>
+    </ng-container>
+
+  </form>
+</nz-spin>
+
+<!-- NESTED OBJECT ITEMS EDIT MODAL -->
+<rappider-modal [(nzVisible)]="objectFieldEditModal.visible"
+                [nzTitle]="objectFieldEditModalTitle"
+                [nzOkDisabled]="loading"
+                (nzOnCancel)="onObjectFieldEditModalClose()"
+                (nzOnOk)="onObjectFieldEditModalSubmit()"
+                nzOkText="Save">
+  <ng-template #objectFieldEditModalTitle>
+    {{ 'SHARED.EDIT' | translate }} {{ objectFieldEditModal.activeBreadcrumbOption?.label }}
+  </ng-template>
+
+  <div class="object-field-edit-modal">
+    <nz-spin [nzSpinning]="loading">
+      <div class="breadcrumb-area">
+        <rappider-breadcrumb [options]="objectFieldEditModal.breadcrumbOptions"
+                             [cssStyle]="{ 'font-size': '13px' }"
+                             (optionClick)="onObjectFieldEditModalBreadcrumbOptionClick($event)">
+        </rappider-breadcrumb>
+      </div>
+
+      <form *ngIf="objectFieldEditModal.activeBreadcrumbOption"
+            nz-form
+            [nzLayout]="FormLayout.Vertical">
+        <ng-container *ngFor="let item of objectFieldEditModal.activeBreadcrumbOption.data.items">
+          <ng-container *ngTemplateOutlet="inputComponent;context:{
+                          $implicit:item,
+                          form: objectFieldEditModal.activeBreadcrumbOption.data.form,
+                          formLayout: FormLayout.Vertical,
+                          labelComponentSize: FULL_COMPONENT_SIZE,
+                          inputComponentSize: FULL_COMPONENT_SIZE,
+                          errors: dataFormFieldErrors[item.fieldName]
+                        }">
+          </ng-container>
+        </ng-container>
+      </form>
+    </nz-spin>
+  </div>
+</rappider-modal>
+
+<!-- INPUT COMPONENTS -->
+<ng-template #inputComponent
+             let-item
+             let-form="form"
+             let-formLayout="formLayout"
+             let-labelComponentSize="labelComponentSize"
+             let-inputComponentSize="inputComponentSize"
+             let-errors="errors">
+
+  <ng-container [formGroup]="form">
+
+    <!-- BUTTON TO SHOW NESTED OBJECT ITEMS IN MODAL -->
+    <ng-container *ngIf="item.items?.length > 0; else component">
+      <nz-form-item>
+
+        <!-- label -->
+        <ng-container *ngTemplateOutlet="label;context:{
+          title: item.title,
+          icon: item.labelIcon,
+          menu: item.menu,
+          size: labelComponentSize,
+          required: item.showRequiredSign,
+          colon: item.showColonSign,
+          hint: item.hint,
+          formLayout: formLayout
+        }"></ng-container>
+
+        <!-- component -->
+        <nz-form-control [nzXs]="inputComponentSize?.xs"
+                         [nzSm]="inputComponentSize?.sm"
+                         [nzMd]="inputComponentSize?.md"
+                         [nzLg]="inputComponentSize?.lg"
+                         [nzXl]="inputComponentSize?.xl"
+                         [nzXXl]="inputComponentSize?.xxl"
+                         [nzExtra]="item.description">
+          <div *ngIf="item.dataPreview"
+               class="data-preview">
+            <div [innerHTML]="processDataPreview(item)"></div>
+          </div>
+          <div>
+            <button nz-button
+                    nzType="default"
+                    (click)="onObjectFormItemEditClick(item)">
+              <i class="far fa-edit"></i> &nbsp; {{ 'SHARED.EDIT' | translate }} {{ item.title }}
+            </button>
+          </div>
+        </nz-form-control>
+
+      </nz-form-item>
+    </ng-container>
+
+    <!-- COMPONENT -->
+    <ng-template #component>
+
+      <!-- LABEL COMPONENT -->
+      <ng-container *ngIf="item.type === ComponentTypes.Label">
+
+        <!-- hide label value when no data specified -->
+        <ng-container *ngIf="!item.hideWhenNoValue || (item.hideWhenNoValue && dataForm.value[item.fieldName])">
+
+          <nz-form-item>
+
+            <!-- label -->
+            <ng-container *ngTemplateOutlet="label;context:{
+          title: item.title,
+          icon: item.labelIcon,
+          menu: item.menu,
+          size: labelComponentSize,
+          colon: item.showColonSign,
+          hint: item.hint,
+          formLayout: formLayout
+        }"></ng-container>
+
+            <!-- component -->
+            <nz-form-control [nzXs]="inputComponentSize?.xs"
+                             [nzSm]="inputComponentSize?.sm"
+                             [nzMd]="inputComponentSize?.md"
+                             [nzLg]="inputComponentSize?.lg"
+                             [nzXl]="inputComponentSize?.xl"
+                             [nzXXl]="inputComponentSize?.xxl"
+                             [nzExtra]="item.description">
+              <span [ngClass]="item.cssClass"
+                    [ngStyle]="item.cssStyle">
+                {{ dataForm.value[item.fieldName] | translate }}
+              </span>
+            </nz-form-control>
+
+          </nz-form-item>
+
+        </ng-container>
+
+      </ng-container>
+
+      <!-- LIST GRID DATA INPUT COMPONENT -->
+      <ng-container *ngIf="item.type === ComponentTypes.ListGridDataInput">
+
+        <!-- hide label value when no data specified -->
+        <ng-container *ngIf="!item.hideWhenNoValue || (item.hideWhenNoValue && dataForm.value[item.fieldName])">
+
+          <nz-form-item>
+
+            <!-- label -->
+            <ng-container *ngTemplateOutlet="label;context:{
+          title: item.title,
+          icon: item.labelIcon,
+          menu: item.menu,
+          size: labelComponentSize,
+          colon: item.showColonSign,
+          hint: item.hint,
+          formLayout: formLayout
+        }"></ng-container>
+
+            <!-- component -->
+            <nz-form-control [nzXs]="inputComponentSize?.xs"
+                             [nzSm]="inputComponentSize?.sm"
+                             [nzMd]="inputComponentSize?.md"
+                             [nzLg]="inputComponentSize?.lg"
+                             [nzXl]="inputComponentSize?.xl"
+                             [nzXXl]="inputComponentSize?.xxl"
+                             [nzExtra]="item.description">
+              <rappider-list-grid-data-input rappiderUnwrapTag
+                                             [formControlName]="item.fieldName"
+                                             (blur)="onFieldBlur(item.fieldName)"
+                                             (ngModelChange)="onFieldValueChange(item, $event)">
+              </rappider-list-grid-data-input>
+            </nz-form-control>
+
+          </nz-form-item>
+
+        </ng-container>
+
+      </ng-container>
+
+      <!-- BUTTON COMPONENT -->
+      <ng-container *ngIf="item.type === ComponentTypes.Button">
+        <nz-form-item>
+
+          <!-- label -->
+          <ng-container *ngTemplateOutlet="label;context:{
+              title: item.title,
+              icon: item.labelIcon,
+              menu: item.menu,
+              size: labelComponentSize,
+              colon: item.showColonSign,
+              hint: item.hint,
+              formLayout: formLayout
+            }"></ng-container>
+
+          <!-- component -->
+          <nz-form-control [nzXs]="inputComponentSize?.xs"
+                           [nzSm]="inputComponentSize?.sm"
+                           [nzMd]="inputComponentSize?.md"
+                           [nzLg]="inputComponentSize?.lg"
+                           [nzXl]="inputComponentSize?.xl"
+                           [nzXXl]="inputComponentSize?.xxl">
+
+
+
+            <!-- button view -->
+            <ng-container *ngIf="!item.view || item.view === ActionView.Button">
+              <button nz-button
+                      type="button"
+                      [nzType]="item.buttonType"
+                      [ngStyle]="item.cssStyle"
+                      [ngClass]="item.cssClass"
+                      (click)="onButtonItemClick(item)">
+                <ng-container *ngIf="item.icon">
+                  <i [ngClass]="item.icon"></i>
+                </ng-container>
+                <ng-container *ngIf="item.icon && item.text">
+                  &nbsp;
+                </ng-container>
+                <ng-container *ngIf="item.text">
+                  {{ item.text | translate }}
+                </ng-container>
+              </button>
+            </ng-container>
+
+            <!-- icon view -->
+            <ng-container *ngIf="item.view === ActionView.Icon && item.behavior !== ActionBehavior.DropDownMenu">
+              <a [ngStyle]="item.cssStyle"
+                 [ngClass]="item.cssClass"
+                 (click)="onButtonItemClick(item)">
+                <ng-container *ngIf="item.icon">
+                  <i [ngClass]="item.icon"></i>
+                </ng-container>
+                <ng-container *ngIf="item.icon && item.text">
+                  &nbsp;
+                </ng-container>
+                <ng-container *ngIf="item.text">
+                  {{ item.text }}
+                </ng-container>
+              </a>
+            </ng-container>
+
+          </nz-form-control>
+
+        </nz-form-item>
+      </ng-container>
+
+      <!-- TEXTBOX COMPONENT -->
+      <ng-container *ngIf="item.type === ComponentTypes.TextBox">
+        <nz-form-item>
+
+          <!-- label -->
+          <ng-container *ngTemplateOutlet="label;context:{
+          title: item.title,
+          icon: item.labelIcon,
+          menu: item.menu,
+          size: labelComponentSize,
+          required: item.showRequiredSign,
+          colon: item.showColonSign,
+          hint: item.hint,
+          formLayout: formLayout
+        }"></ng-container>
+
+          <!-- component -->
+          <nz-form-control [nzXs]="inputComponentSize?.xs"
+                           [nzSm]="inputComponentSize?.sm"
+                           [nzMd]="inputComponentSize?.md"
+                           [nzLg]="inputComponentSize?.lg"
+                           [nzXl]="inputComponentSize?.xl"
+                           [nzXXl]="inputComponentSize?.xxl"
+                           [nzExtra]="item.description"
+                           [nzValidateStatus]="errors?.length ? 'error' : null"
+                           [nzErrorTip]="errorsTemplate">
+            <rappider-textbox rappiderUnwrapTag
+                              [formControlName]="item.fieldName"
+                              [cssClass]="item.cssClass"
+                              [cssStyle]="item.cssStyle"
+                              [placeholder]="item.placeholder"
+                              [mask]="item.mask"
+                              [maskGuide]="item.maskGuide"
+                              [type]="item.textType"
+                              [height]="item.height"
+                              [disabled]="!!item.disabled"
+                              [mentionSupported]="item.mentionSupported"
+                              [mentionPrefix]="item.mentionPrefix"
+                              [mentionValues]="item.mentionValues"
+                              (blur)="onFieldBlur(item.fieldName)"
+                              (ngModelChange)="onFieldValueChange(item, $event)"></rappider-textbox>
+          </nz-form-control>
+        </nz-form-item>
+      </ng-container>
+
+      <!-- EDIT FORM CONFIG INPUT COMPONENT -->
+      <ng-container *ngIf="item.type === ComponentTypes.EditFormConfigInput">
+        <nz-form-item>
+
+          <!-- label -->
+          <ng-container *ngTemplateOutlet="label;context:{
+          title: item.title,
+          icon: item.labelIcon,
+          menu: item.menu,
+          size: labelComponentSize,
+          required: item.showRequiredSign,
+          colon: item.showColonSign,
+          hint: item.hint,
+          formLayout: formLayout
+        }"></ng-container>
+
+          <!-- component -->
+          <nz-form-control [nzXs]="inputComponentSize?.xs"
+                           [nzSm]="inputComponentSize?.sm"
+                           [nzMd]="inputComponentSize?.md"
+                           [nzLg]="inputComponentSize?.lg"
+                           [nzXl]="inputComponentSize?.xl"
+                           [nzXXl]="inputComponentSize?.xxl"
+                           [nzExtra]="item.description"
+                           [nzValidateStatus]="errors?.length ? 'error' : null"
+                           [nzErrorTip]="errorsTemplate">
+            <rappider-edit-form-config-input rappiderUnwrapTag
+                                             [formControlName]="item.fieldName"
+                                             (blur)="onFieldBlur(item.fieldName)"
+                                             (ngModelChange)="onFieldValueChange(item, $event)">
+            </rappider-edit-form-config-input>
+          </nz-form-control>
+        </nz-form-item>
+      </ng-container>
+
+      <!-- JSON ARRAY COMPONENT -->
+      <ng-container *ngIf="item.type === ComponentTypes.JsonArray">
+        <nz-form-item>
+          <!-- label -->
+          <ng-container *ngTemplateOutlet="label;context:{
+          title: item.title,
+          icon: item.labelIcon,
+          menu: item.menu,
+          size: labelComponentSize,
+          required: item.showRequiredSign,
+          colon: item.showColonSign,
+          hint: item.hint,
+          formLayout: formLayout
+        }"></ng-container>
+          <rappider-json-array rappiderUnwrapTag
+                               [formControlName]="item.fieldName"
+                               [previewFieldNames]="item.previewFieldNames"
+                               (blur)="onFieldBlur(item.fieldName)"
+                               (ngModelChange)="onFieldValueChange(item, $event)">
+          </rappider-json-array>
+        </nz-form-item>
+      </ng-container>
+
+      <!-- LIST COMPONENT -->
+      <ng-container *ngIf="item.type === ComponentTypes.List">
+        <nz-form-item>
+          <!-- label -->
+          <ng-container *ngTemplateOutlet="label;context:{
+          title: item.title,
+          icon: item.labelIcon,
+          menu: item.menu,
+          size: labelComponentSize,
+          required: item.showRequiredSign,
+          colon: item.showColonSign,
+          hint: item.hint,
+          formLayout: formLayout
+        }"></ng-container>
+
+          <!-- component -->
+          <nz-form-control [nzXs]="inputComponentSize?.xs"
+                           [nzSm]="inputComponentSize?.sm"
+                           [nzMd]="inputComponentSize?.md"
+                           [nzLg]="inputComponentSize?.lg"
+                           [nzXl]="inputComponentSize?.xl"
+                           [nzXXl]="inputComponentSize?.xxl"
+                           [nzExtra]="item.description"
+                           [nzValidateStatus]="errors?.length ? 'error' : null">
+            <rappider-list rappiderUnwrapTag
+                           [formControlName]="item.fieldName"
+                           [list]="item.list"
+                           (blur)="onFieldBlur(item.fieldName)"
+                           (ngModelChange)="onFieldValueChange(item, $event)">
+            </rappider-list>
+          </nz-form-control>
+        </nz-form-item>
+      </ng-container>
+
+      <!-- DIMENSION SELECT COMPONENT -->
+      <ng-container *ngIf="item.type === ComponentTypes.DimensionSelect">
+        <nz-form-item>
+
+          <!-- label -->
+          <ng-container *ngTemplateOutlet="label;context:{
+          title: item.title,
+          icon: item.labelIcon,
+          menu: item.menu,
+          size: labelComponentSize,
+          required: item.showRequiredSign,
+          colon: item.showColonSign,
+          hint: item.hint,
+          formLayout: formLayout
+        }"></ng-container>
+
+          <!-- component -->
+          <nz-form-control [nzXs]="inputComponentSize?.xs"
+                           [nzSm]="inputComponentSize?.sm"
+                           [nzMd]="inputComponentSize?.md"
+                           [nzLg]="inputComponentSize?.lg"
+                           [nzXl]="inputComponentSize?.xl"
+                           [nzXXl]="inputComponentSize?.xxl"
+                           [nzExtra]="item.description"
+                           [nzValidateStatus]="errors?.length ? 'error' : null"
+                           [nzErrorTip]="errorsTemplate">
+            <rappider-dimension-select rappiderUnwrapTag
+                                       [formControlName]="item.fieldName"
+                                       [height]="item.height"
+                                       (blur)="onFieldBlur(item.fieldName)"
+                                       (ngModelChange)="onFieldValueChange(item, $event)">
+            </rappider-dimension-select>
+          </nz-form-control>
+        </nz-form-item>
+      </ng-container>
+
+      <!-- LIST GRID CONFIG INPUT COMPONENT -->
+      <ng-container *ngIf="item.type === ComponentTypes.ListGridConfigInput">
+        <nz-form-item>
+
+          <!-- label -->
+          <ng-container *ngTemplateOutlet="label;context:{
+          title: item.title,
+          icon: item.labelIcon,
+          menu: item.menu,
+          size: labelComponentSize,
+          required: item.showRequiredSign,
+          colon: item.showColonSign,
+          hint: item.hint,
+          formLayout: formLayout
+        }"></ng-container>
+
+          <!-- component -->
+          <nz-form-control [nzXs]="inputComponentSize?.xs"
+                           [nzSm]="inputComponentSize?.sm"
+                           [nzMd]="inputComponentSize?.md"
+                           [nzLg]="inputComponentSize?.lg"
+                           [nzXl]="inputComponentSize?.xl"
+                           [nzXXl]="inputComponentSize?.xxl"
+                           [nzExtra]="item.description"
+                           [nzValidateStatus]="errors?.length ? 'error' : null"
+                           [nzErrorTip]="errorsTemplate">
+            <rappider-list-grid-config-input rappiderUnwrapTag
+                                             [formControlName]="item.fieldName"
+                                             (blur)="onFieldBlur(item.fieldName)"
+                                             (ngModelChange)="onFieldValueChange(item, $event)">
+            </rappider-list-grid-config-input>
+          </nz-form-control>
+        </nz-form-item>
+      </ng-container>
+
+      <!-- TIME PICKER COMPONENT -->
+      <ng-container *ngIf="item.type === ComponentTypes.TimePicker">
+        <nz-form-item>
+
+          <!-- label -->
+          <ng-container *ngTemplateOutlet="label;context:{
+          title: item.title,
+          icon: item.labelIcon,
+          menu: item.menu,
+          size: labelComponentSize,
+          required: item.showRequiredSign,
+          colon: item.showColonSign,
+          hint: item.hint,
+          formLayout: formLayout
+        }"></ng-container>
+
+          <!-- component -->
+          <nz-form-control [nzXs]="inputComponentSize?.xs"
+                           [nzSm]="inputComponentSize?.sm"
+                           [nzMd]="inputComponentSize?.md"
+                           [nzLg]="inputComponentSize?.lg"
+                           [nzXl]="inputComponentSize?.xl"
+                           [nzXXl]="inputComponentSize?.xxl"
+                           [nzExtra]="item.description"
+                           [nzValidateStatus]="errors?.length ? 'error' : null"
+                           [nzErrorTip]="errorsTemplate">
+            <rappider-time-picker rappiderUnwrapTag
+                                  [formControlName]="item.fieldName"
+                                  (blur)="onFieldBlur(item.fieldName)"
+                                  (ngModelChange)="onFieldValueChange(item, $event)">
+            </rappider-time-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </ng-container>
+
+      <!-- COLOR PICKER COMPONENT -->
+      <ng-container *ngIf="item.type === ComponentTypes.ColorPicker">
+        <nz-form-item>
+
+          <!-- label -->
+          <ng-container *ngTemplateOutlet="label;context:{
+              title: item.title,
+              icon: item.labelIcon,
+              menu: item.menu,
+              size: labelComponentSize,
+              required: item.showRequiredSign,
+              colon: item.showColonSign,
+              hint: item.hint,
+              formLayout: formLayout
+            }"></ng-container>
+
+          <!-- component -->
+          <nz-form-control [nzXs]="inputComponentSize?.xs"
+                           [nzSm]="inputComponentSize?.sm"
+                           [nzMd]="inputComponentSize?.md"
+                           [nzLg]="inputComponentSize?.lg"
+                           [nzXl]="inputComponentSize?.xl"
+                           [nzXXl]="inputComponentSize?.xxl"
+                           [nzExtra]="item.description"
+                           [nzValidateStatus]="errors?.length ? 'error' : null"
+                           [nzErrorTip]="errorsTemplate">
+            <rappider-color-picker rappiderUnwrapTag
+                                   [formControlName]="item.fieldName"
+                                   [cssClass]="item.cssClass"
+                                   [cssStyle]="item.cssStyle"
+                                   [height]="item.height"
+                                   [saveClickOutside]="item.saveClickOutside"
+                                   [okButtonVisible]="item.okButtonVisible"
+                                   [okButtonText]="item.okButtonText"
+                                   [okButtonClass]="item.okButtonClass"
+                                   [cancelButtonVisible]="item.cancelButtonVisible"
+                                   [cancelButtonText]="item.cancelButtonText"
+                                   [cancelButtonClass]="item.cancelButtonClass"
+                                   (ngModelChange)="onFieldValueChange(item, $event)"></rappider-color-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </ng-container>
+
+      <!-- TEXTAREA COMPONENT -->
+      <ng-container *ngIf="item.type === ComponentTypes.TextArea">
+        <nz-form-item>
+
+          <!-- label -->
+          <ng-container *ngTemplateOutlet="label;context:{
+          title: item.title,
+          icon: item.labelIcon,
+          menu: item.menu,
+          size: labelComponentSize,
+          required: item.showRequiredSign,
+          colon: item.showColonSign,
+          hint: item.hint,
+          formLayout: formLayout
+        }"></ng-container>
+
+          <!-- component -->
+          <nz-form-control [nzXs]="inputComponentSize?.xs"
+                           [nzSm]="inputComponentSize?.sm"
+                           [nzMd]="inputComponentSize?.md"
+                           [nzLg]="inputComponentSize?.lg"
+                           [nzXl]="inputComponentSize?.xl"
+                           [nzXXl]="inputComponentSize?.xxl"
+                           [nzExtra]="item.description"
+                           [nzValidateStatus]="errors?.length ? 'error' : null"
+                           [nzErrorTip]="errorsTemplate">
+            <rappider-textarea rappiderUnwrapTag
+                               [formControlName]="item.fieldName"
+                               [rows]="4"
+                               [autosize]="item.autosize"
+                               [cssClass]="item.cssClass"
+                               [cssStyle]="item.cssStyle"
+                               (blur)="onFieldBlur(item.fieldName)"
+                               (ngModelChange)="onFieldValueChange(item, $event)"></rappider-textarea>
+          </nz-form-control>
+
+        </nz-form-item>
+      </ng-container>
+
+      <!-- RICH TEXT EDITOR COMPONENT -->
+      <ng-container *ngIf="item.type === ComponentTypes.RichTextEditor">
+        <nz-form-item>
+
+          <!-- label -->
+          <ng-container *ngTemplateOutlet="label;context:{
+          title: item.title,
+          icon: item.labelIcon,
+          menu: item.menu,
+          size: labelComponentSize,
+          required: item.showRequiredSign,
+          colon: item.showColonSign,
+          hint: item.hint,
+          formLayout: formLayout
+        }"></ng-container>
+
+          <!-- component -->
+          <nz-form-control [nzXs]="inputComponentSize?.xs"
+                           [nzSm]="inputComponentSize?.sm"
+                           [nzMd]="inputComponentSize?.md"
+                           [nzLg]="inputComponentSize?.lg"
+                           [nzXl]="inputComponentSize?.xl"
+                           [nzXXl]="inputComponentSize?.xxl"
+                           [nzExtra]="item.description"
+                           [nzValidateStatus]="errors?.length ? 'error' : null"
+                           [nzErrorTip]="errorsTemplate">
+            <rappider-rich-text-editor rappiderUnwrapTag
+                                       [formControlName]="item.fieldName"
+                                       [editorType]="item.editorType"
+                                       [theme]="item.editorTheme"
+                                       [cssClass]="item.cssClass"
+                                       [cssStyle]="item.cssStyle"
+                                       [mentionSupported]="item.mentionSupported"
+                                       [mentionValues]="item.mentionValues"
+                                       (blur)="onFieldBlur(item.fieldName)"
+                                       (ngModelChange)="onFieldValueChange(item, $event)"></rappider-rich-text-editor>
+          </nz-form-control>
+
+        </nz-form-item>
+      </ng-container>
+
+      <!-- CODE MIRROR COMPONENT -->
+      <ng-container *ngIf="item.type === ComponentTypes.CodeMirror">
+        <nz-form-item>
+
+          <!-- label -->
+          <ng-container *ngTemplateOutlet="label;context:{
+          title: item.title,
+          icon: item.labelIcon,
+          menu: item.menu,
+          size: labelComponentSize,
+          required: item.showRequiredSign,
+          colon: item.showColonSign,
+          hint: item.hint,
+          formLayout: formLayout
+        }"></ng-container>
+
+          <!-- component -->
+          <nz-form-control [nzXs]="inputComponentSize?.xs"
+                           [nzSm]="inputComponentSize?.sm"
+                           [nzMd]="inputComponentSize?.md"
+                           [nzLg]="inputComponentSize?.lg"
+                           [nzXl]="inputComponentSize?.xl"
+                           [nzXXl]="inputComponentSize?.xxl"
+                           [nzExtra]="item.description"
+                           [nzValidateStatus]="errors?.length ? 'error' : null"
+                           [nzErrorTip]="errorsTemplate">
+            <rappider-codemirror *ngIf="timeoutCompleted"
+                                 rappiderUnwrapTag
+                                 [formControlName]="item.fieldName"
+                                 [settings]="item.settings"
+                                 [cssClass]="item.cssClass"
+                                 [cssStyle]="item.cssStyle"
+                                 (blur)="onFieldBlur(item.fieldName)"
+                                 (ngModelChange)="onFieldValueChange(item, $event)"></rappider-codemirror>
+          </nz-form-control>
+
+        </nz-form-item>
+      </ng-container>
+
+      <!-- HTML EDITOR COMPONENT -->
+      <ng-container *ngIf="item.type === ComponentTypes.HTMLEditor">
+        <nz-form-item>
+
+          <!-- label -->
+          <ng-container *ngTemplateOutlet="label;context:{
+          title: item.title,
+          icon: item.labelIcon,
+          menu: item.menu,
+          size: labelComponentSize,
+          required: item.showRequiredSign,
+          colon: item.showColonSign,
+          hint: item.hint,
+          formLayout: formLayout
+        }"></ng-container>
+
+          <!-- component -->
+          <nz-form-control [nzXs]="inputComponentSize?.xs"
+                           [nzSm]="inputComponentSize?.sm"
+                           [nzMd]="inputComponentSize?.md"
+                           [nzLg]="inputComponentSize?.lg"
+                           [nzXl]="inputComponentSize?.xl"
+                           [nzXXl]="inputComponentSize?.xxl"
+                           [nzExtra]="item.description"
+                           [nzValidateStatus]="errors?.length ? 'error' : null"
+                           [nzErrorTip]="errorsTemplate">
+            <rappider-html-editor rappiderUnwrapTag
+                                  [formControlName]="item.fieldName"
+                                  [placeholder]="item.placeholder"
+                                  [cssClass]="item.cssClass"
+                                  [cssStyle]="item.cssStyle"
+                                  (blur)="onFieldBlur(item.fieldName)"
+                                  (ngModelChange)="onFieldValueChange(item, $event)"></rappider-html-editor>
+          </nz-form-control>
+        </nz-form-item>
+      </ng-container>
+
+      <!-- NUMBER COMPONENT -->
+      <ng-container *ngIf="item.type === ComponentTypes.Number">
+        <nz-form-item>
+
+          <!-- label -->
+          <ng-container *ngTemplateOutlet="label;context:{
+          title: item.title,
+          icon: item.labelIcon,
+          menu: item.menu,
+          size: labelComponentSize,
+          required: item.showRequiredSign,
+          colon: item.showColonSign,
+          hint: item.hint,
+          formLayout: formLayout
+        }"></ng-container>
+
+          <!-- component -->
+          <nz-form-control [nzXs]="inputComponentSize?.xs"
+                           [nzSm]="inputComponentSize?.sm"
+                           [nzMd]="inputComponentSize?.md"
+                           [nzLg]="inputComponentSize?.lg"
+                           [nzXl]="inputComponentSize?.xl"
+                           [nzXXl]="inputComponentSize?.xxl"
+                           [nzExtra]="item.description"
+                           [nzValidateStatus]="errors?.length ? 'error' : null"
+                           [nzErrorTip]="errorsTemplate">
+            <rappider-number-input rappiderUnwrapTag
+                                   [formControlName]="item.fieldName"
+                                   [step]="1"
+                                   [cssClass]="item.cssClass"
+                                   [cssStyle]="item.cssStyle"
+                                   (blur)="onFieldBlur(item.fieldName)"
+                                   (ngModelChange)="onFieldValueChange(item, $event)"></rappider-number-input>
+          </nz-form-control>
+
+        </nz-form-item>
+      </ng-container>
+
+      <!-- DATEPICKER COMPONENT -->
+      <ng-container *ngIf="item.type === ComponentTypes.DatePicker">
+        <nz-form-item>
+
+          <!-- label -->
+          <ng-container *ngTemplateOutlet="label;context:{
+          title: item.title,
+          icon: item.labelIcon,
+          menu: item.menu,
+          size: labelComponentSize,
+          required: item.showRequiredSign,
+          colon: item.showColonSign,
+          hint: item.hint,
+          formLayout: formLayout
+        }"></ng-container>
+
+          <!-- component -->
+          <nz-form-control [nzXs]="inputComponentSize?.xs"
+                           [nzSm]="inputComponentSize?.sm"
+                           [nzMd]="inputComponentSize?.md"
+                           [nzLg]="inputComponentSize?.lg"
+                           [nzXl]="inputComponentSize?.xl"
+                           [nzXXl]="inputComponentSize?.xxl"
+                           [nzExtra]="item.description"
+                           [nzValidateStatus]="errors?.length ? 'error' : null"
+                           [nzErrorTip]="errorsTemplate">
+            <rappider-date-picker rappiderUnwrapTag
+                                  [formControlName]="item.fieldName"
+                                  [minSelectableDate]="item.minSelectableDate"
+                                  [maxSelectableDate]="item.maxSelectableDate"
+                                  [cssClass]="item.cssClass"
+                                  [cssStyle]="item.cssStyle"
+                                  (blur)="onFieldBlur(item.fieldName)"
+                                  (ngModelChange)="onFieldValueChange(item, $event)"></rappider-date-picker>
+          </nz-form-control>
+
+        </nz-form-item>
+      </ng-container>
+
+      <!-- DATE TIME PICKER COMPONENT -->
+      <ng-container *ngIf="item.type === ComponentTypes.DateTimePicker">
+        <nz-form-item>
+
+          <!-- label -->
+          <ng-container *ngTemplateOutlet="label;context:{
+          title: item.title,
+          icon: item.labelIcon,
+          menu: item.menu,
+          size: labelComponentSize,
+          required: item.showRequiredSign,
+          colon: item.showColonSign,
+          hint: item.hint,
+          formLayout: formLayout
+        }"></ng-container>
+
+          <!-- component -->
+          <nz-form-control [nzXs]="inputComponentSize?.xs"
+                           [nzSm]="inputComponentSize?.sm"
+                           [nzMd]="inputComponentSize?.md"
+                           [nzLg]="inputComponentSize?.lg"
+                           [nzXl]="inputComponentSize?.xl"
+                           [nzXXl]="inputComponentSize?.xxl"
+                           [nzExtra]="item.description"
+                           [nzValidateStatus]="errors?.length ? 'error' : null"
+                           [nzErrorTip]="errorsTemplate">
+            <rappider-datetime-picker rappiderUnwrapTag
+                                      [formControlName]="item.fieldName"
+                                      [minSelectableDate]="item.minSelectableDate"
+                                      [maxSelectableDate]="item.maxSelectableDate"
+                                      (blur)="onFieldBlur(item.fieldName)"
+                                      (ngModelChange)="onFieldValueChange(item, $event)"></rappider-datetime-picker>
+          </nz-form-control>
+
+        </nz-form-item>
+      </ng-container>
+
+      <!-- RADIO COMPONENT -->
+      <ng-container *ngIf="item.type === ComponentTypes.Radio">
+        <nz-form-item>
+
+          <!-- label -->
+          <ng-container *ngTemplateOutlet="label;context:{
+          title: item.title,
+          icon: item.labelIcon,
+          menu: item.menu,
+          size: labelComponentSize,
+          required: item.showRequiredSign,
+          colon: item.showColonSign,
+          hint: item.hint,
+          formLayout: formLayout
+        }"></ng-container>
+
+          <!-- component -->
+          <nz-form-control [nzXs]="inputComponentSize?.xs"
+                           [nzSm]="inputComponentSize?.sm"
+                           [nzMd]="inputComponentSize?.md"
+                           [nzLg]="inputComponentSize?.lg"
+                           [nzXl]="inputComponentSize?.xl"
+                           [nzXXl]="inputComponentSize?.xxl"
+                           [nzExtra]="item.description"
+                           [nzValidateStatus]="errors?.length ? 'error' : null"
+                           [nzErrorTip]="errorsTemplate">
+            <rappider-radio rappiderUnwrapTag
+                            [formControlName]="item.fieldName"
+                            [options]="item.options"
+                            [cssClass]="item.cssClass"
+                            [cssStyle]="item.cssStyle"
+                            [invalidConfigText]="item.invalidConfigText"
+                            (blur)="onFieldBlur(item.fieldName)"
+                            (ngModelChange)="onFieldValueChange(item, $event)"></rappider-radio>
+          </nz-form-control>
+
+        </nz-form-item>
+      </ng-container>
+
+      <!-- CHECKBOX COMPONENT -->
+      <ng-container *ngIf="item.type === ComponentTypes.CheckBox">
+        <nz-form-item>
+
+          <!-- label -->
+          <ng-container *ngTemplateOutlet="label;context:{
+          title: item.title,
+          icon: item.labelIcon,
+          menu: item.menu,
+          size: labelComponentSize,
+          required: item.showRequiredSign,
+          colon: item.showColonSign,
+          hint: item.hint,
+          formLayout: formLayout
+        }"></ng-container>
+
+          <!-- component -->
+          <nz-form-control [nzXs]="inputComponentSize?.xs"
+                           [nzSm]="inputComponentSize?.sm"
+                           [nzMd]="inputComponentSize?.md"
+                           [nzLg]="inputComponentSize?.lg"
+                           [nzXl]="inputComponentSize?.xl"
+                           [nzXXl]="inputComponentSize?.xxl"
+                           [nzExtra]="item.description"
+                           [nzValidateStatus]="errors?.length ? 'error' : null"
+                           [nzErrorTip]="errorsTemplate">
+            <rappider-checkbox rappiderUnwrapTag
+                               [formControlName]="item.fieldName"
+                               [text]="item.text"
+                               [cssClass]="item.cssClass"
+                               [cssStyle]="item.cssStyle"
+                               (blur)="onFieldBlur(item.fieldName)"
+                               (ngModelChange)="onFieldValueChange(item, $event)"></rappider-checkbox>
+          </nz-form-control>
+
+        </nz-form-item>
+      </ng-container>
+
+      <!-- SELECT COMPONENT -->
+      <ng-container *ngIf="item.type === ComponentTypes.Select">
+        <nz-form-item>
+
+          <!-- label -->
+          <ng-container *ngTemplateOutlet="label;context:{
+          title: item.title,
+          icon: item.labelIcon,
+          menu: item.menu,
+          size: labelComponentSize,
+          required: item.showRequiredSign,
+          colon: item.showColonSign,
+          hint: item.hint,
+          formLayout: formLayout
+        }"></ng-container>
+
+          <!-- component -->
+          <nz-form-control [nzXs]="inputComponentSize?.xs"
+                           [nzSm]="inputComponentSize?.sm"
+                           [nzMd]="inputComponentSize?.md"
+                           [nzLg]="inputComponentSize?.lg"
+                           [nzXl]="inputComponentSize?.xl"
+                           [nzXXl]="inputComponentSize?.xxl"
+                           [nzExtra]="item.description"
+                           [nzValidateStatus]="errors?.length ? 'error' : null"
+                           [nzErrorTip]="errorsTemplate">
+            <rappider-select rappiderUnwrapTag
+                             [formControlName]="item.fieldName"
+                             [settings]="item.settings"
+                             [options]="item.options"
+                             [grouppedOptions]="item.grouppedOptions"
+                             [cssClass]="item.cssClass"
+                             [cssStyle]="item.cssStyle"
+                             [invalidConfigText]="item.invalidConfigText"
+                             [placeholder]="item.placeholder"
+                             [disabled]="item.disabled"
+                             (blur)="onFieldBlur(item.fieldName)"
+                             (ngModelChange)="onFieldValueChange(item, $event)"></rappider-select>
+          </nz-form-control>
+
+        </nz-form-item>
+      </ng-container>
+
+      <!-- TAG INPUT COMPONENT -->
+      <ng-container *ngIf="item.type === ComponentTypes.TagInput">
+        <nz-form-item>
+
+          <!-- label -->
+          <ng-container *ngTemplateOutlet="label;context:{
+              title: item.title,
+              icon: item.labelIcon,
+              menu: item.menu,
+              size: labelComponentSize,
+              required: item.showRequiredSign,
+              colon: item.showColonSign,
+              hint: item.hint,
+              formLayout: formLayout
+            }"></ng-container>
+
+          <!-- component -->
+          <nz-form-control [nzXs]="inputComponentSize?.xs"
+                           [nzSm]="inputComponentSize?.sm"
+                           [nzMd]="inputComponentSize?.md"
+                           [nzLg]="inputComponentSize?.lg"
+                           [nzXl]="inputComponentSize?.xl"
+                           [nzXXl]="inputComponentSize?.xxl"
+                           [nzExtra]="item.description"
+                           [nzValidateStatus]="errors?.length ? 'error' : null"
+                           [nzErrorTip]="errorsTemplate">
+            <rappider-tag-input rappiderUnwrapTag
+                                [formControlName]="item.fieldName"
+                                [settings]="item.settings"
+                                [options]="item.options"
+                                [cssClass]="item.cssClass"
+                                [cssStyle]="item.cssStyle"
+                                [placeholder]="item.placeholder"
+                                (blur)="onFieldBlur(item.fieldName)"
+                                (ngModelChange)="onFieldValueChange(item, $event)">
+            </rappider-tag-input>
+          </nz-form-control>
+
+        </nz-form-item>
+      </ng-container>
+
+      <!-- RATE COMPONENT -->
+      <ng-container *ngIf="item.type === ComponentTypes.Rate">
+        <nz-form-item>
+
+          <!-- label -->
+          <ng-container *ngTemplateOutlet="label;context:{
+          title: item.title,
+          icon: item.labelIcon,
+          menu: item.menu,
+          size: labelComponentSize,
+          required: item.showRequiredSign,
+          colon: item.showColonSign,
+          hint: item.hint,
+          formLayout: formLayout
+        }"></ng-container>
+
+          <!-- component -->
+          <nz-form-control [nzXs]="inputComponentSize?.xs"
+                           [nzSm]="inputComponentSize?.sm"
+                           [nzMd]="inputComponentSize?.md"
+                           [nzLg]="inputComponentSize?.lg"
+                           [nzXl]="inputComponentSize?.xl"
+                           [nzXXl]="inputComponentSize?.xxl"
+                           [nzExtra]="item.description"
+                           [nzValidateStatus]="errors?.length ? 'error' : null"
+                           [nzErrorTip]="errorsTemplate">
+            <rappider-rate rappiderUnwrapTag
+                           [formControlName]="item.fieldName"
+                           [cssClass]="item.cssClass"
+                           [cssStyle]="item.cssStyle"
+                           (blur)="onFieldBlur(item.fieldName)"
+                           (ngModelChange)="onFieldValueChange(item, $event)"></rappider-rate>
+          </nz-form-control>
+
+        </nz-form-item>
+      </ng-container>
+
+      <!-- SLIDER COMPONENT -->
+      <ng-container *ngIf="item.type === ComponentTypes.Slider">
+        <nz-form-item>
+
+          <!-- label -->
+          <ng-container *ngTemplateOutlet="label;context:{
+          title: item.title,
+          icon: item.labelIcon,
+          menu: item.menu,
+          size: labelComponentSize,
+          required: item.showRequiredSign,
+          colon: item.showColonSign,
+          hint: item.hint,
+          formLayout: formLayout
+        }"></ng-container>
+
+          <!-- component -->
+          <nz-form-control [nzXs]="inputComponentSize?.xs"
+                           [nzSm]="inputComponentSize?.sm"
+                           [nzMd]="inputComponentSize?.md"
+                           [nzLg]="inputComponentSize?.lg"
+                           [nzXl]="inputComponentSize?.xl"
+                           [nzXXl]="inputComponentSize?.xxl"
+                           [nzExtra]="item.description"
+                           [nzValidateStatus]="errors?.length ? 'error' : null"
+                           [nzErrorTip]="errorsTemplate">
+            <rappider-slider rappiderUnwrapTag
+                             [formControlName]="item.fieldName"
+                             [cssClass]="item.cssClass"
+                             [cssStyle]="item.cssStyle"
+                             (blur)="onFieldBlur(item.fieldName)"
+                             (ngModelChange)="onFieldValueChange(item, $event)"></rappider-slider>
+          </nz-form-control>
+
+        </nz-form-item>
+      </ng-container>
+
+      <!-- ROW FORM COMPONENT -->
+      <ng-container *ngIf="item.type === ComponentTypes.RowForm">
+        <nz-form-item>
+
+          <!-- label -->
+          <ng-container *ngTemplateOutlet="label;context:{
+          title: item.title,
+          icon: item.labelIcon,
+          menu: item.menu,
+          size: labelComponentSize,
+          required: item.showRequiredSign,
+          colon: item.showColonSign,
+          hint: item.hint,
+          formLayout: formLayout
+        }"></ng-container>
+
+          <!-- component -->
+          <nz-form-control [nzXs]="inputComponentSize?.xs"
+                           [nzSm]="inputComponentSize?.sm"
+                           [nzMd]="inputComponentSize?.md"
+                           [nzLg]="inputComponentSize?.lg"
+                           [nzXl]="inputComponentSize?.xl"
+                           [nzXXl]="inputComponentSize?.xxl"
+                           [nzExtra]="item.description"
+                           [nzValidateStatus]="errors?.length ? 'error' : null"
+                           [nzErrorTip]="errorsTemplate">
+            <rappider-row-form rappiderUnwrapTag
+                               [formControlName]="item.fieldName"
+                               [orderable]="item.orderable"
+                               [columns]="item.columns"
+                               [addButtonText]="item.addButtonText"
+                               [addButtonVisible]="item.addButtonVisible"
+                               [hasInitialEmptyRow]="item.hasInitialEmptyRow"
+                               (ngModelChange)="onFieldValueChange(item, $event)"></rappider-row-form>
+          </nz-form-control>
+
+        </nz-form-item>
+      </ng-container>
+
+      <!-- STRING ARRAY COMPONENT -->
+      <ng-container *ngIf="item.type === ComponentTypes.StringArray">
+        <nz-form-item>
+
+          <!-- label -->
+          <ng-container *ngTemplateOutlet="label;context:{
+          title: item.title,
+          icon: item.labelIcon,
+          menu: item.menu,
+          size: labelComponentSize,
+          required: item.showRequiredSign,
+          colon: item.showColonSign,
+          hint: item.hint,
+          formLayout: formLayout
+        }"></ng-container>
+
+          <!-- component -->
+          <nz-form-control [nzXs]="inputComponentSize?.xs"
+                           [nzSm]="inputComponentSize?.sm"
+                           [nzMd]="inputComponentSize?.md"
+                           [nzLg]="inputComponentSize?.lg"
+                           [nzXl]="inputComponentSize?.xl"
+                           [nzXXl]="inputComponentSize?.xxl"
+                           [nzExtra]="item.description"
+                           [nzValidateStatus]="errors?.length ? 'error' : null"
+                           [nzErrorTip]="errorsTemplate">
+            <rappider-string-array rappiderUnwrapTag
+                                   [formControlName]="item.fieldName"
+                                   (ngModelChange)="onFieldValueChange(item, $event)"
+                                   (blur)="onFieldBlur(item.fieldName)"></rappider-string-array>
+          </nz-form-control>
+
+        </nz-form-item>
+      </ng-container>
+
+      <!-- ICON PICKER COMPONENT -->
+      <ng-container *ngIf="item.type === ComponentTypes.IconPicker">
+        <nz-form-item>
+
+          <!-- label -->
+          <ng-container *ngTemplateOutlet="label;context:{
+          title: item.title,
+          icon: item.labelIcon,
+          menu: item.menu,
+          size: labelComponentSize,
+          required: item.showRequiredSign,
+          colon: item.showColonSign,
+          hint: item.hint,
+          formLayout: formLayout
+        }"></ng-container>
+
+          <!-- component -->
+          <nz-form-control [nzXs]="inputComponentSize?.xs"
+                           [nzSm]="inputComponentSize?.sm"
+                           [nzMd]="inputComponentSize?.md"
+                           [nzLg]="inputComponentSize?.lg"
+                           [nzXl]="inputComponentSize?.xl"
+                           [nzXXl]="inputComponentSize?.xxl"
+                           [nzExtra]="item.description"
+                           [nzValidateStatus]="errors?.length ? 'error' : null"
+                           [nzErrorTip]="errorsTemplate">
+            <rappider-icon-picker rappiderUnwrapTag
+                                  [formControlName]="item.fieldName"
+                                  (ngModelChange)="onFieldValueChange(item, $event)"></rappider-icon-picker>
+          </nz-form-control>
+
+        </nz-form-item>
+      </ng-container>
+
+      <!-- RADIO GROUP COMPONENT -->
+      <ng-container *ngIf="item.type === ComponentTypes.RadioGroup">
+        <nz-form-item>
+
+          <!-- label -->
+          <ng-container *ngTemplateOutlet="label;context:{
+          title: item.title,
+          icon: item.labelIcon,
+          menu: item.menu,
+          size: labelComponentSize,
+          required: item.showRequiredSign,
+          colon: item.showColonSign,
+          hint: item.hint,
+          formLayout: formLayout
+        }"></ng-container>
+
+          <!-- component -->
+          <nz-form-control [nzXs]="inputComponentSize?.xs"
+                           [nzSm]="inputComponentSize?.sm"
+                           [nzMd]="inputComponentSize?.md"
+                           [nzLg]="inputComponentSize?.lg"
+                           [nzXl]="inputComponentSize?.xl"
+                           [nzXXl]="inputComponentSize?.xxl"
+                           [nzExtra]="item.description"
+                           [nzValidateStatus]="errors?.length ? 'error' : null"
+                           [nzErrorTip]="errorsTemplate">
+            <rappider-radio-group rappiderUnwrapTag
+                                  [formControlName]="item.fieldName"
+                                  [options]="item.options"
+                                  [cssStyle]="item.cssStyle"
+                                  [cssClass]="item.cssClass"
+                                  [invalidConfigText]="item.invalidConfigText"
+                                  [size]="item.size"
+                                  [disabled]="item.disabled"
+                                  [title]="item.title"
+                                  [buttonStyle]="item.buttonStyle"
+                                  (ngModelChange)="onFieldValueChange(item, $event)"
+                                  (blur)="onFieldBlur(item.fieldName)"></rappider-radio-group>
+          </nz-form-control>
+
+        </nz-form-item>
+      </ng-container>
+
+
+      <!-- INPUT VALIDATOR INFO COMPONENT -->
+      <ng-container *ngIf="item.type === ComponentTypes.InputValidatorInfo">
+
+        <!-- show when related field is dirty -->
+        <ng-container *ngIf="dataForm.get(item.relatedFieldName).dirty">
+
+          <nz-form-item>
+
+            <!-- label -->
+            <ng-container *ngTemplateOutlet="label;context:{
+            title: null,
+            size: labelComponentSize,
+            hint: item.hint,
+            formLayout: formLayout
+          }"></ng-container>
+
+            <!-- component -->
+            <rappider-input-validator-info rappiderUnwrapTag
+                                           [data]="getFormFieldValueByFieldName(item.relatedFieldName)"
+                                           [patternInfos]="item.patternInfos"></rappider-input-validator-info>
+
+          </nz-form-item>
+
+        </ng-container>
+
+      </ng-container>
+
+      <!-- INPUT ERRORS TEMPLATE -->
+      <ng-template #errorsTemplate>
+        <rappider-input-error *ngIf="errors?.length"
+                              [errors]="errors"></rappider-input-error>
+      </ng-template>
+
+    </ng-template>
+
+  </ng-container>
+
+</ng-template>
+
+<!-- LABEL OF THE INPUT CONTENT -->
+<ng-template #label
+             let-formLayout="formLayout"
+             let-title="title"
+             let-icon="icon"
+             let-size="size"
+             let-for="for"
+             let-colon="colon"
+             let-required="required"
+             let-menu="menu"
+             let-hint="hint">
+  <!-- no allow to vertical layout with no title -->
+  <ng-container *ngIf="!(!title && formLayout === FormLayout.Vertical)">
+
+    <nz-form-label [ngClass]="{ 'vertical-row-label': formLayout === FormLayout.Vertical }"
+                   [nzXs]="size?.xs"
+                   [nzSm]="size?.sm"
+                   [nzMd]="size?.md"
+                   [nzLg]="size?.lg"
+                   [nzXl]="size?.xl"
+                   [nzNoColon]="colon === false"
+                   [nzRequired]="required">
+
+      <div class="input-label-wrapper">
+
+        <div>
+          <!-- label content -->
+          <rappider-input-label rappiderUnwrapTag
+                                [title]="title"
+                                [icon]="icon"></rappider-input-label>
+
+          <!-- description as question mark hint -->
+          <ng-container *ngIf="hint">
+            &nbsp;
+            <span [nzTooltipTitle]="hint"
+                  nzTooltipPlacement="topLeft"
+                  nz-tooltip>
+              <i class="fas fa-question-circle"></i>
+            </span>
+          </ng-container>
+        </div>
+
+        <ng-container *ngIf="menu">
+          <div *ngIf="formLayout === FormLayout.Vertical">
+            <button nz-button
+                    nz-dropdown
+                    [nzDropdownMenu]="labelMenu"
+                    nzBackdrop="false"
+                    nzTrigger="click"
+                    nzSize="small"
+                    nzPlacement="bottomRight">
+              <i nz-icon
+                 nzType="ellipsis"></i>
+            </button>
+            <nz-dropdown-menu #labelMenu="nzDropdownMenu">
+              <ul nz-menu>
+                <li *ngFor="let item of menu.items"
+                    nz-menu-item
+                    (click)="onLabelMenuItemClick(item)">{{ item.label }}</li>
+              </ul>
+            </nz-dropdown-menu>
+          </div>
+        </ng-container>
+
+      </div>
+
+    </nz-form-label>
+
+  </ng-container>
+</ng-template>

@@ -1,0 +1,24 @@
+<div class="card-section">
+  <div>
+    <ng-container *ngIf="icon" 
+                   class="icon-section">
+      <rappider-icon class="icon" 
+                     [name]="icon.name" 
+                     [color]="icon.color" 
+                     [type]="icon.type" 
+                     [theme]="icon.theme">
+      </rappider-icon>
+    </ng-container>
+  </div>
+  <div *ngIf="title"  
+        class="content">
+    <div>
+      <rappider-heading [type]="title.type" 
+                        [content]="title.content"></rappider-heading>
+    </div>
+    <div *ngIf="content" 
+          class="additional-text">
+      <rappider-paragraph [content]="content"></rappider-paragraph>
+    </div>
+  </div>
+</div>

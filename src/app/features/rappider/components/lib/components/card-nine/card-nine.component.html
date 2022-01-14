@@ -1,0 +1,42 @@
+<div class="card-nine-area">
+  <div class="card-area">
+    <div class="card-container">
+      <div *ngIf="icon"
+           class="icon-container">
+        <rappider-icon [name]="icon.name"
+                       [type]="icon.type"
+                       [theme]="icon.theme"
+                       [color]="icon.color"></rappider-icon>
+      </div>
+      <div *ngIf="content"
+           class="content">
+        <rappider-text [content]="content"></rappider-text>
+      </div>
+      <div *ngIf="content"
+           class="content">
+        <rappider-text [content]="description"></rappider-text>
+      </div>
+    </div>
+  </div>
+
+  <div class="secondary-card-container"
+       [style.backgroundColor]="backgroundColor">
+    <div class="card-container">
+      <div *ngIf="icon"
+           class="icon-container">
+        <rappider-icon [name]="icon.name"
+                       [type]="icon.type"
+                       [theme]="icon.theme"
+                       [color]="icon.color"></rappider-icon>
+      </div>
+      <div *ngIf="content"
+           class="content">
+        <rappider-text [content]="content"></rappider-text>
+      </div>
+      <div *ngIf="content"
+           class="content">
+        <rappider-text [content]="description"></rappider-text>
+      </div>
+    </div>
+  </div>
+</div>

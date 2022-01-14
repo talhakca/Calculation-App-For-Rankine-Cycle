@@ -1,0 +1,32 @@
+.category {
+font-weight: (--font-weight-normal);
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.heading{
+  padding-right: var(--padding-3x);
+}
+.subCategory {
+  display: flex;
+  flex-direction: row;
+}
+
+.text {
+  display: flex;
+}
+
+.link {
+  font-weight: var(--font-weight-light);
+  display: flex;
+  align-items: center;
+}
+
+.link:last-child{
+  .divider{
+    display: none;
+  }
+}

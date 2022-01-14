@@ -1,0 +1,45 @@
+<div class="card-container">
+  <div class="card-header">
+    <rappider-label [content]="description"></rappider-label>
+  </div>
+  <section class="section-container">
+    <ng-container *ngFor="let item of items">
+      <div [class]="item?.senderType">
+        <div class="avatar-time-section">
+          <div *ngIf="item.time"
+               class="time-area">
+            <rappider-text [content]="item.time"></rappider-text>
+          </div>
+
+          <div *ngIf="item.avatar">
+            <rappider-avatar [imageUrl]="item.avatar.imageUrl"
+                             [shape]="item.avatar.avatarShape"
+                             [size]="item.avatar.avatarSize"></rappider-avatar>
+          </div>
+        </div>
+
+        <div class="text-area">
+          <div *ngIf="item.name"
+               class="name-area">
+            <rappider-label [content]="item.name"></rappider-label>
+          </div>
+
+          <div *ngIf="item.message"
+               class="message-area">
+            <rappider-text [content]="item.message"></rappider-text>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </section>
+  <div class="card-footer">
+    <div *ngIf="inputGroup">
+      <rappider-input-group class="input-group"
+                            [prefixButton]="inputGroup.prefixButton"
+                            [suffixButton]="inputGroup.suffixButton"
+                            [prefixIcon]="inputGroup.prefixIcon"
+                            [suffixIcon]="inputGroup.suffixIcon"
+                            [textbox]="inputGroup.textbox"></rappider-input-group>
+    </div>
+  </div>
+</div>

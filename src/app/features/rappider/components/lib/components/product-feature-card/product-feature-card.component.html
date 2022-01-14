@@ -1,0 +1,45 @@
+<div class="card-container">
+  <div *ngIf="image"
+       class="image">
+    <rappider-image [source]="image.source"
+                    [width]="image.width"
+                    [alternateText]="image.alternateText"></rappider-image>
+  </div>
+  <div class="product-area">
+    <div *ngIf="heading"
+         class="heading">
+      <rappider-heading [type]="heading.type"
+                        [content]="heading.content"></rappider-heading>
+    </div>
+    <div class="product-detail-wrapper">
+      <div class="rate-price-additional-content-wrapper">
+        <div class="rate">
+          <rappider-rate-display [rate]="rate"></rappider-rate-display>
+        </div>
+        <div *ngIf="price"
+             class="price">
+          <rappider-text [content]="price"></rappider-text>
+        </div>
+        <div *ngFor="let additionalContent of additionalContents"
+             class="additional-content">
+          <div *ngIf="additionalContent">
+            <rappider-text [content]="additionalContent"></rappider-text>
+          </div>
+        </div>
+      </div>
+      <div class="detail-area">
+        <div *ngFor="let item of items"
+             class="detail-item">
+          <div *ngIf="item.feature"
+               class="feature">
+            <rappider-text [content]="item.feature"></rappider-text>
+          </div>
+          <div *ngIf="item.detail"
+               class="detail">
+            <rappider-text [content]="item.detail"></rappider-text>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+<div class="banner-split"
+     [style.width]="width">
+  <div class="banner-area">
+    <div class="row">
+      <div class="col-6 content-area">
+        <h3 class="text-white">
+          {{ title }}
+        </h3>
+        <span class="content"
+              [innerHTML]="content"></span>
+        <div *ngIf="button"
+             class="button-area">
+          <rappider-button *ngIf="button"
+                           [type]="button.type"
+                           [shape]="button.shape"
+                           [text]="button.text"
+                           [size]="button.size"
+                           [transparent]="button.transparent"
+                           [loading]="button.loading"
+                           [block]="button.block"
+                           [disabled]="button.disabled"
+                           [colorType]="button.colorType"
+                           [icon]="button.icon"></rappider-button>
+        </div>
+      </div>
+      <div *ngIf="url"
+           class="col-6 img-area"
+           [style.background-image]="url">
+      </div>
+    </div>
+  </div>
+</div>

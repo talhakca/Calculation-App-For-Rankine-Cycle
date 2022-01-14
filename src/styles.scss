@@ -1,0 +1,11 @@
+/* bootstrap implementation */
+@import '~bootstrap/scss/bootstrap';
+
+/* custom flex scss file */
+@import './styles/custom-flex.scss';
+
+/* custom variables scss file */
+@import './styles/variables.scss';
+
+/* user's customization scss file */
+@import './styles/customization.scss';

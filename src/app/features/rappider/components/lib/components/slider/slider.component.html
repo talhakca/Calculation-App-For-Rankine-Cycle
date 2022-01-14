@@ -1,0 +1,11 @@
+<nz-slider nz-input
+           [(ngModel)]="value"
+           [nzRange]="dualMode"
+           [nzMin]="minRange"
+           [nzMax]="maxRange"
+           [nzStep]="step"
+           [nzMarks]="marks"
+           [nzDisabled]="readonly"
+           [ngClass]="cssClass"
+           [ngStyle]="cssStyle"
+           (nzOnAfterChange)="onBlur()"></nz-slider>

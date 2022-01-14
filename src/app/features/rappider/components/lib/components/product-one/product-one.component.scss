@@ -1,0 +1,31 @@
+.product-one {
+    width: min-content;
+    border: 1px solid transparent;
+    padding: var(--padding-3x);
+    &:hover {
+        border-color: #ddd;
+        cursor: pointer;
+    }
+}
+
+.image-wrapper {
+    position: relative;
+    margin-bottom: var(--margin-3x);
+    rappider-tag {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+}
+
+.prices-wrapper {
+    margin-top: var(--margin-2x);
+    .final-price {
+        margin-right: var(--margin-2x);
+        font-size: var(--font-size-large);
+    }
+    .price {
+        text-decoration: line-through;
+        font-size: var(--font-size-medium);
+    }
+}

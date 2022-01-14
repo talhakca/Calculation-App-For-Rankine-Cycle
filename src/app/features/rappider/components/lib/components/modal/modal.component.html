@@ -1,0 +1,16 @@
+<nz-modal [(nzVisible)]="nzVisible"
+          [nzTitle]="nzTitle"
+          [nzWidth]="nzWidth"
+          [nzOkText]="nzOkText"
+          [nzCancelText]="nzCancelText"
+          [nzOkDisabled]="nzOkDisabled"
+          [nzCancelDisabled]="nzCancelDisabled"
+          [nzFooter]="nzFooter"
+          [nzOkDanger]="nzOkDanger"
+          [nzOkLoading]="nzOkLoading"
+          (nzOnCancel)="onCancelClick()"
+          (nzOnOk)="onOkClick()">
+  <ng-container *nzModalContent>
+    <ng-content></ng-content>
+  </ng-container>
+</nz-modal>

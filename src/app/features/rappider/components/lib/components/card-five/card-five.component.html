@@ -1,0 +1,54 @@
+<div class="card-five-container">
+  <nz-card>
+    <div *ngIf="avatar"
+         class="card-five-avatar">
+      <rappider-avatar [text]="avatar.text"
+                       [iconName]="avatar.iconName"
+                       [shape]="avatar.shape"
+                       [imageUrl]="avatar.imageUrl"
+                       [altText]="avatar.altText"
+                       [cssStyle]="avatar.cssStyle"
+                       [size]="avatar.size"></rappider-avatar>
+    </div>
+
+    <div *ngIf="title"
+         class="card-five-title">
+      <rappider-heading [content]="title.content"
+                        [type]="title.type"></rappider-heading>
+    </div>
+
+    <div class="card-five-content">
+      <rappider-paragraph [content]="additionalContent"></rappider-paragraph>
+    </div>
+
+    <div class="card-five-button-area">
+      <div *ngFor="let button of buttons"
+           class="card-five-primary-button">
+        <rappider-button [type]="button.type"
+                         [shape]="button.shape"
+                         [text]="button.text"
+                         [size]="button.size"
+                         [transparent]="button.transparent"
+                         [loading]="button.loading"
+                         [block]="button.block"
+                         [disabled]="button.disabled"
+                         [colorType]="button.colorType"
+                         [icon]="button.icon"></rappider-button>
+      </div>
+    </div>
+
+    <div class="card-five-optional-button"
+         *ngIf="optionalButton">
+      <rappider-button [type]="optionalButton.type"
+                       [shape]="optionalButton.shape"
+                       [text]="optionalButton.text"
+                       [size]="optionalButton.size"
+                       [transparent]="optionalButton.transparent"
+                       [loading]="optionalButton.loading"
+                       [block]="optionalButton.block"
+                       [disabled]="optionalButton.disabled"
+                       [colorType]="optionalButton.colorType"
+                       [icon]="optionalButton.icon"></rappider-button>
+    </div>
+  </nz-card>
+</div>

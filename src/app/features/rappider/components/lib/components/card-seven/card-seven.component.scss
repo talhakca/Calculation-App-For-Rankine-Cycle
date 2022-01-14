@@ -1,0 +1,36 @@
+.card-seven-container {
+  display: flex;
+  flex-direction: row;
+}
+.container {
+  display: block;
+}
+.card-seven-title {
+  margin-bottom: var(--margin-2x);
+}
+
+.avatar-area {
+  margin-bottom: var(--margin-3x);
+  display: flex;
+  align-items: center;
+}
+
+.author-name {
+  margin-left: var(--margin-2x);
+  color: var(--default-color);
+  font-weight: var(--font-weight-medium-500);
+}
+
+.divider {
+  color: var(--default-color);
+}
+
+.description {
+  margin-bottom: var(--margin-4x);
+}
+
+.card-seven-button {
+  display: flex;
+  font-weight: var(--font-weight-medium-500);
+  justify-content: flex-end;
+}

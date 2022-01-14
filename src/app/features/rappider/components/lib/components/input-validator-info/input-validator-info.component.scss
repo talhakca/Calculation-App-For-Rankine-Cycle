@@ -1,0 +1,22 @@
+.pattern-row {
+  display: flex;
+  align-items: center;
+  color: #999;
+
+  .pattern-row-icon {
+    font-size: 16px;
+    margin-right: 5px;
+  }
+
+  .pattern-row-text {
+    font-size: 12px;
+  }
+
+  .pattern-match {
+    color: green;
+  }
+
+  .pattern-not-match {
+    color: red;
+  }
+}

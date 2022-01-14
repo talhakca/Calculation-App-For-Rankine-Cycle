@@ -1,0 +1,35 @@
+<nz-list class="list"
+         [nzDataSource]="data"
+         [nzRenderItem]="item"
+         nzItemLayout="horizontal"
+         [nzLoading]="loading">
+  <ng-template #item
+               let-item>
+    <nz-list-item>
+      <nz-list-item-meta class="item-container"
+                         [nzTitle]="nzTitle"
+                         [nzAvatar]="item?.imageUrl"
+                         [nzDescription]="nzDescription">
+        <ng-template #nzTitle>
+          <div class="title"
+               (click)="onTitleClick(item)"
+               [ngClass]="{ 'cursor-pointer': emitable }">
+            {{ item?.title | translate }}
+          </div>
+          <div class="sub-title">
+            {{ item?.subTitle | translate }}
+          </div>
+          <div *ngIf="item.date"
+               class="date">
+            {{ item?.date | formatDate }}
+          </div>
+        </ng-template>
+        <ng-template #nzDescription>
+          <div class="description">
+            <span [innerHTML]="item?.description"></span>
+          </div>
+        </ng-template>
+      </nz-list-item-meta>
+    </nz-list-item>
+  </ng-template>
+</nz-list>

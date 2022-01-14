@@ -1,0 +1,19 @@
+<div *ngIf="buttons"
+     class="button-group">
+  <nz-button-group>
+    <span *ngFor="let button of buttons">
+      <rappider-button [type]="button.type"
+                       [text]="button.text"
+                       [colorType]="button.colorType"
+                       [icon]="button.icon"
+                       [size]="button.size"
+                       [transparent]="button.transparent"
+                       [loading]="button.loading"
+                       [block]="button.block"
+                       [disabled]="button.disabled"
+                       [colorType]="button.colorType"
+                       [shape]="button.shape"
+                       (click)="onButtonClick(button)"></rappider-button>
+    </span>
+  </nz-button-group>
+</div>

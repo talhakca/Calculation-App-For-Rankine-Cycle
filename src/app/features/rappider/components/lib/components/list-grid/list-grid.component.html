@@ -1,0 +1,344 @@
+<div *ngIf="config">
+  <!-- Title -->
+  <ng-container *ngIf="config.title">
+    <h5 class="title">{{ config.title | translate }}</h5>
+  </ng-container>
+
+  <!-- List actions -->
+  <div *ngIf="config.listActions?.length"
+       class="list-actions">
+    <div *ngFor="let action of config.listActions"
+         class="list-actions">
+      <button nz-button
+              [ngClass]="action.cssClass"
+              [nzType]="action.buttonType"
+              (click)="onListActionClick(action)">
+        <ng-container *ngIf="action.icon">
+          <i [ngClass]="action.icon"></i>
+        </ng-container>
+        <ng-container *ngIf="action.icon && action.text">
+          &nbsp;&nbsp;
+        </ng-container>
+        <ng-container *ngIf="action.text">
+          {{ action.text | translate }}
+        </ng-container>
+      </button>
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- Search box -->
+    <ng-container *ngIf="config.searchable !== false">
+      <div class="col-6">
+        <nz-input-group [nzSuffix]="suffixIconSearch">
+          <input type="text"
+                 [ngModel]="searchText"
+                 (ngModelChange)="filterData($event)"
+                 nz-input
+                 placeholder="Type to search" />
+          <ng-template #suffixIconSearch>
+            <ng-container *ngIf="searchText">
+              <a (click)="filterData(null)">
+                <i class="far fa-times-circle"></i>
+              </a>
+            </ng-container>
+          </ng-template>
+        </nz-input-group>
+      </div>
+    </ng-container>
+
+    <!-- Visible Columns multi selection -->
+    <ng-container *ngIf="config.columnVisibilitySelectable !== true">
+      <div class="col-6">
+        <ul class="toolbar-actions">
+          <li class="visible-columns-select">
+            <nz-select [(ngModel)]="visibleColumns"
+                       class="filter-columns-select"
+                       nzMode="multiple"
+                       [nzMaxTagCount]="0"
+                       [nzMaxTagPlaceholder]="colSelectPlaceHolder">
+              <nz-option *ngFor="let column of getVisibilityChangableColumnList(config?.columns)"
+                         [nzDisabled]="config && config.defaultSearchField && column.fieldName === config.defaultSearchField"
+                         [nzLabel]="column.title | translate"
+                         [nzValue]="column.fieldName"></nz-option>
+            </nz-select>
+            <ng-template #colSelectPlaceHolder
+                         let-selectedList>
+              <div class="filter-columns-placeholder">
+                <div>
+                  <i class="far fa-line-columns"></i>
+                </div>
+                <div>
+                  &nbsp;Filter Columns
+                </div>
+              </div>
+            </ng-template>
+          </li>
+
+        </ul>
+      </div>
+    </ng-container>
+
+  </div>
+
+  <nz-table #dataTable
+            *ngIf="config.columns?.length"
+            nzHideOnSinglePage
+            [nzData]="displayedData"
+            [nzLoading]="loading"
+            [nzSize]="config.size"
+            [nzShowPagination]="config.showPagination"
+            [nzPageSize]="config.pageSize"
+            [(nzPageIndex)]="pageNumber">
+    <thead (nzSortOrderChange)="sortData($event)">
+      <tr>
+        <!-- Orderable icon -->
+        <th *ngIf="config.orderable"></th>
+        <!-- Select All checkbox -->
+        <th *ngIf="config.selectable"
+            nzWidth="62px"
+            [nzShowCheckbox]="validateMultipleSelection()"
+            [(nzChecked)]="isAllSelected"
+            [nzIndeterminate]="isIndeterminate"
+            (nzCheckedChange)="onBulkSelectionChange($event)"></th>
+        <!-- Columns titles from the config -->
+        <ng-container *ngFor="let column of getVisibleColumns(config.columns)">
+          <ng-container *ngIf="!config.orderable && column.sortable !== false; else unorderableColumnConfig">
+            <th nzShowSort
+                [nzColumnKey]="column.fieldName">{{ column.title | translate }}</th>
+          </ng-container>
+          <ng-template #unorderableColumnConfig>
+            <th>{{ column.title | translate }}</th>
+          </ng-template>
+        </ng-container>
+        <ng-container *ngIf="config.itemActions?.length">
+          <th></th>
+        </ng-container>
+      </tr>
+    </thead>
+    <tbody cdkDropList
+           [cdkDropListDisabled]="!config.orderable"
+           (cdkDropListDropped)="onRowOrderChange($event)">
+      <tr *ngFor="let data of dataTable.data; let rowIndex = index"
+          cdkDrag>
+        <!-- Orderable icon -->
+        <td *ngIf="config.orderable">
+          <i class="fas fa-bars"></i>
+        </td>
+        <!-- Select item checkbox -->
+        <td *ngIf="config.selectable"
+            nzShowCheckbox
+            [nzChecked]="data.selected"
+            (nzCheckedChange)="selectItems($event, rowIndex)"></td>
+        <!-- Columns from the config -->
+        <td *ngFor="let column of getVisibleColumns(config.columns)"
+            [ngStyle]="column.cssStyle">
+          <ng-container
+                        *ngIf="isListGridDataObject(getFieldValueByFieldName(data, column.fieldName));else notObjectTemplates">
+            <!-- OBJECT type field -->
+            <ng-container>
+              <pre>{{ getFieldValueByFieldName(data, column.fieldName) }}</pre>
+            </ng-container>
+          </ng-container>
+
+          <ng-template #notObjectTemplates>
+            <!-- TEXT type field -->
+            <ng-container *ngIf="column.type === CrudViewColumnType.Text">
+              {{ getFieldValueByFieldName(data, column.fieldName) }}
+            </ng-container>
+            <!-- NUMBER type field -->
+            <ng-container *ngIf="column.type === CrudViewColumnType.Number">
+              {{ getFieldValueByFieldName(data, column.fieldName) }}
+            </ng-container>
+            <!-- CURRENCY type field -->
+            <ng-container *ngIf="column.type === CrudViewColumnType.Currency">
+              {{ getFieldValueByFieldName(data, column.fieldName) | currency: column.format || 'USD' }}
+            </ng-container>
+            <!-- TAG type field -->
+            <ng-container *ngIf="column.type === CrudViewColumnType.Tag">
+              <nz-tag [nzColor]="column.settings.color">{{ getFieldValueByFieldName(data, column.fieldName) }}</nz-tag>
+            </ng-container>
+            <!-- ICON type field -->
+            <ng-container *ngIf="column.type === CrudViewColumnType.Icon">
+              <ng-container *ngFor="let iconSetting of column.iconSettings">
+                <ng-container *ngIf="iconSetting.values.includes(getFieldValueByFieldName(data, column.fieldName))">
+                  <i [ngClass]="iconSetting.icon"
+                     class="icon-column"></i>
+                </ng-container>
+              </ng-container>
+            </ng-container>
+            <!-- LINK type field -->
+            <ng-container *ngIf="column.type === CrudViewColumnType.Link">
+              <a [routerLink]="replaceIdInString(column.routerLink, data['id'])"
+                 [queryParams]="column.queryParams"
+                 [innerHTML]="getFieldValueByFieldName(data, column.fieldName)"></a>
+            </ng-container>
+            <!-- CUSTOM LINK type field -->
+            <ng-container *ngIf="column.type === CrudViewColumnType.CustomLink">
+              <a [routerLink]="replaceDataInString(column.routerLink, data)"
+                 [queryParams]="column.queryParams">{{ getFieldValueByFieldName(data, column.fieldName) }}</a>
+            </ng-container>
+            <!-- CUSTOM LINK type field -->
+            <ng-container *ngIf="column.type === CrudViewColumnType.ActionLink">
+              <a (click)="onEmitItemClick(data)">{{ getFieldValueByFieldName(data, column.fieldName) }}</a>
+            </ng-container>
+            <!-- DATETIME type field -->
+            <ng-container *ngIf="column.type === CrudViewColumnType.DateTime">
+              <ng-container *ngIf="getFieldValueByFieldName(data, column.fieldName); else noDateTime">
+                <ng-container *ngIf="column.format; else noDateTimeFormat">
+                  {{convertToDate(getFieldValueByFieldName(data, column.fieldName)) | date:column.format}}
+                </ng-container>
+              </ng-container>
+              <ng-template #noDateTimeFormat>{{convertToDate(getFieldValueByFieldName(data, column.fieldName)) |
+                date:'short'}}</ng-template>
+              <ng-template #noDateTime>--</ng-template>
+            </ng-container>
+            <!-- DATE type field -->
+            <ng-container *ngIf="column.type === CrudViewColumnType.Date">
+              <ng-container *ngIf="!getFieldValueByFieldName(data, column.fieldName)">
+                --
+              </ng-container>
+              <ng-container *ngIf="getFieldValueByFieldName(data, column.fieldName)">
+                <ng-container *ngIf="column.format; else noDateFormat">
+                  {{convertToDate(getFieldValueByFieldName(data, column.fieldName)) | date:column.format}}
+                </ng-container>
+              </ng-container>
+              <ng-template #noDateFormat>{{convertToDate(getFieldValueByFieldName(data, column.fieldName)) |
+                date:'short'}}</ng-template>
+            </ng-container>
+            <!-- BOOLEAN type field -->
+            <ng-container *ngIf="column.type === CrudViewColumnType.Boolean">
+              <ng-container *ngIf="getFieldValueByFieldName(data, column.fieldName)">
+                <i class="fas fa-check color-green"></i>
+              </ng-container>
+              <ng-container *ngIf="!getFieldValueByFieldName(data, column.fieldName)">
+                <i class="fas fa-times color-red"></i>
+              </ng-container>
+            </ng-container>
+            <!-- IMAGE type field -->
+            <ng-container *ngIf="column.type === CrudViewColumnType.Image">
+              <img class="thumbnail"
+                   [ngClass]="{ 'no-image-thumbnail': !getFieldValueByFieldName(data, column.fieldName) }"
+                   [src]="getFieldValueByFieldName(data, column.fieldName) || noImageUrl" />
+            </ng-container>
+            <!-- RATE type field -->
+            <ng-container *ngIf="column.type === CrudViewColumnType.Rate">
+              <rappider-rate-display [rate]="getFieldValueByFieldName(data, column.fieldName)"></rappider-rate-display>
+            </ng-container>
+            <!-- OTHER type field -->
+            <ng-container *ngIf="column.type === 'other'">
+              {{ getFieldValueByFieldName(data, column.fieldName) }}
+            </ng-container>
+          </ng-template>
+        </td>
+        <!-- Action columns -->
+        <td *ngIf="config.itemActions?.length"
+            class="item-actions">
+          <ng-container *ngIf="config.itemActionsLength > config.itemActions.length;else dropdownWrap">
+            <ng-container *ngFor="let action of config.itemActions; let itemActionIndex = index">
+              <ng-container *ngIf="checkActionButtonVisibility(displayedData, data, action)">
+                <!-- button view -->
+                <ng-container *ngIf="!action.view || action.view === ActionView.Button">
+                  <button nz-button
+                          [nzType]="action.buttonType || 'default'"
+                          [ngClass]="action.cssClass"
+                          [ngStyle]="action.cssStyle"
+                          [disabled]="action.disabled"
+                          (click)="onColumnActionClick(action, data, rowIndex)">
+                    <ng-container *ngIf="action.icon">
+                      <i [ngClass]="action.icon"></i>
+                    </ng-container>
+                    <ng-container *ngIf="action.icon && action.text">
+                      &nbsp;&nbsp;
+                    </ng-container>
+                    <ng-container *ngIf="action.text">
+                      {{ action.text | translate }}
+                    </ng-container>
+                  </button>
+                </ng-container>
+
+                <!-- icon view -->
+                <ng-container
+                              *ngIf="action.view === ActionView.Icon && action.behavior !== ActionBehavior.DropDownMenu">
+                  <a (click)="onColumnActionClick(action, data, rowIndex)">
+                    <ng-container *ngIf="action.icon">
+                      <i [ngClass]="action.icon"></i>
+                    </ng-container>
+                  </a>
+                </ng-container>
+
+
+                <!-- icon view drop down menu -->
+                <ng-container
+                              *ngIf="action.view === ActionView.Icon && action.behavior === ActionBehavior.DropDownMenu">
+                  <a nz-dropdown
+                     nzPlacement="leftTop"
+                     nzTrigger="click"
+                     [nzDropdownMenu]="menu">
+                    <ng-container *ngIf="action.icon">
+                      <i [ngClass]="action.icon"></i>
+                    </ng-container>
+                    <span *ngIf="action.text">{{ action.text | translate}}</span>
+                  </a>
+                  <nz-dropdown-menu #menu="nzDropdownMenu">
+                    <ul nz-menu>
+                      <li *ngFor="let menuItem of action.actions"
+                          nz-menu-item
+                          class="action-drop-down-menu-item"
+                          (click)="onColumnActionClick(menuItem, data, rowIndex)">
+                        <ng-container *ngIf="menuItem.icon">
+                          <i [ngClass]="menuItem.icon"></i>
+                        </ng-container>
+                        &nbsp;&nbsp;
+                        <span *ngIf="menuItem.title">{{ menuItem.title }}</span>
+                      </li>
+                    </ul>
+                  </nz-dropdown-menu>
+                </ng-container>
+                <nz-divider *ngIf="config.itemActions.length > (itemActionIndex + 1)"
+                            nzType="vertical"></nz-divider>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+
+          <ng-template #dropdownWrap>
+            <a *ngIf="checkItemActionDropdownMenuVisiblity(displayedData, data, config.itemActions)"
+               nz-dropdown
+               nzPlacement="leftTop"
+               nzTrigger="click"
+               [nzDropdownMenu]="menu">
+              <i nz-icon
+                 nzType="ellipsis"
+                 nzTheme="outline"></i>
+            </a>
+            <nz-dropdown-menu #menu="nzDropdownMenu">
+              <ul nz-menu>
+                <ng-container *ngFor="let action of config.itemActions; let itemActionIndex = index">
+                  <ng-container *ngIf="checkActionButtonVisibility(displayedData, data, action)">
+                    <li nz-menu-item
+                        class="action-drop-down-menu-item"
+                        (click)="onColumnActionClick(action, data, rowIndex)">
+                      <div class="action-drop-down-menu-item-row">
+                        <div *ngIf="action.icon"
+                             class="dropdown-menu-item-icon">
+                          <i [ngClass]="action.icon"></i>
+                        </div>
+                        <ng-container *ngIf="action.icon && action.text">
+                          &nbsp;&nbsp;
+                        </ng-container>
+                        <div *ngIf="action.text"
+                             class="dropdown-menu-item-text">
+                          <span>{{ action.text | translate }}</span>
+                        </div>
+                      </div>
+                    </li>
+                  </ng-container>
+                </ng-container>
+              </ul>
+            </nz-dropdown-menu>
+          </ng-template>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>

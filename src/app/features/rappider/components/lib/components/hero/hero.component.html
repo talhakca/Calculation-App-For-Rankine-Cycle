@@ -1,0 +1,30 @@
+<div class="container-area"
+     [style.background-image]="url">
+  <div class="content-area">
+    <div class="font-weight-light">
+      <div class="title">
+        {{ title }}
+      </div>
+      <hr class="line"
+          [style.background-color]="lineBackgroundColor"
+          [style.width]="lineWidth">
+      <div class="content"
+           [innerHTML]="content">
+      </div>
+    </div>
+    <div *ngIf="button"
+         class="button-area">
+      <rappider-button [type]="button.type"
+                       [shape]="button.shape"
+                       [text]="button.text"
+                       [size]="button.size"
+                       [transparent]="button.transparent"
+                       [loading]="button.loading"
+                       [block]="button.block"
+                       [disabled]="button.disabled"
+                       [colorType]="button.colorType"
+                       [icon]="button.icon"
+                       (click)="onButtonClick()"></rappider-button>
+    </div>
+  </div>
+</div>

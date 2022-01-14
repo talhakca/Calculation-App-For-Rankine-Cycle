@@ -1,0 +1,19 @@
+.banner-area {
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.5s;
+  transform: scale(1);
+  padding: 150px;
+}
+
+.banner-area:hover {
+  transition: transform 0.5s;
+  transform: scale(1.2);
+}
+
+.main-text-area {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

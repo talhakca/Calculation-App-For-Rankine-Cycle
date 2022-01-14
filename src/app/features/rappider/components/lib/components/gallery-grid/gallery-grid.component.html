@@ -1,0 +1,39 @@
+<div class="container-area"
+     [style.width]="image?.width">
+  <div *ngIf="image"
+       class="img-area">
+    <rappider-image class="img"
+                    [source]="image.source"
+                    [width]="image.width"
+                    [alternateText]="image.alternateText"></rappider-image>
+  </div>
+  <div class="content-area">
+    <div class="content-section"
+         [ngClass]="cssClass">
+      <div *ngIf="title"
+           class="title">
+        <rappider-heading [content]="title.content"
+                          [type]="title.type"></rappider-heading>
+      </div>
+      <div *ngIf="subtitle"
+           class="sub-title">
+        <rappider-heading [content]="subtitle.content"
+                          [type]="subtitle.type"></rappider-heading>
+      </div>
+      <div *ngIf="button"
+           class="button">
+        <rappider-button [type]="button.type"
+                         [shape]="button.shape"
+                         [text]="button.text"
+                         [size]="button.size"
+                         [transparent]="button.transparent"
+                         [loading]="button.loading"
+                         [block]="button.block"
+                         [disabled]="button.disabled"
+                         [colorType]="button.colorType"
+                         [icon]="button.icon"
+                         (click)="onButtonClick()"></rappider-button>
+      </div>
+    </div>
+  </div>
+</div>

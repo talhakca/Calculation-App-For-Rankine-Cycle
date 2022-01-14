@@ -1,0 +1,120 @@
+.title {
+  margin-bottom: 20px;
+}
+
+.thumbnail {
+  max-height: 100px;
+  max-width: 100px;
+  border: 1px solid lightgray;
+}
+
+.no-image-thumbnail {
+  max-height: 50px;
+  max-width: 50px;
+}
+
+.action-drop-down-menu-item {
+  min-width: 150px;
+}
+
+.action-drop-down-menu-item-row {
+  display: flex;
+  align-items: center;
+}
+
+.toolbar-actions {
+  float: right;
+  list-style: none;
+  display: flex;
+
+  & > * {
+    margin-right: 10px;
+
+    &:nth-last-of-type(1) {
+      margin-right: 0;
+    }
+  }
+}
+
+:host ::ng-deep {
+  .ant-table-column-title {
+    font-weight: bold;
+    font-size: 13px;
+    text-transform: capitalize;
+  }
+
+  .filter-columns-select {
+    width: 200px;
+  }
+
+  .filter-columns-placeholder {
+    display: flex;
+    align-items: center;
+  }
+
+  .visible-columns-select {
+    .ant-select {
+      .ant-select-selector {
+        .ant-select-selection-item {
+          background-color: white;
+          border: none;
+        }
+      }
+    }
+    .ant-select-selection-item {
+      width: 95%;
+    }
+  }
+}
+
+.list-actions {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: 0 10px 10px 0;
+
+  .list-action:nth-last-of-type(1) {
+    margin-right: 0;
+  }
+
+  .right-list-actions {
+    display: flex;
+    justify-content: flex-end;
+
+    .right-list-action {
+      margin-left: var(--margin-2x);
+    }
+  }
+
+  .left-list-actions {
+    display: flex;
+    justify-content: flex-start;
+
+    .left-list-action {
+      margin-right: var(--margin-2x);
+    }
+  }
+}
+
+.dropdown {
+  display: flex;
+  align-items: center;
+}
+
+.icon-column {
+  font-size: 20px;
+}
+
+/* TABLE ORDER */
+::ng-deep {
+  .cdk-drag-preview {
+    display: table;
+  }
+  .cdk-drag-placeholder {
+    opacity: 0;
+  }
+}
+
+.item-actions {
+  text-align: right;
+}

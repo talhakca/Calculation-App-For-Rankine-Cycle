@@ -1,0 +1,59 @@
+<section class="title-bar">
+  <div class="bar">
+    <div class="main-area">
+      <div *ngIf="mainTitle"
+           class="main-title">
+        <rappider-text [content]="mainTitle"></rappider-text>
+      </div>
+
+      <!-- ----------------------------------------------------------------------------------------- -->
+      <!-- BREADCRUMB -->
+      <div class="breadcrumb-icon">
+        <rappider-icon *ngIf="actionIcon"
+                       [name]="actionIcon.name"
+                       [type]="actionIcon.type"
+                       [theme]="actionIcon.theme"
+                       [color]="actionIcon.color"
+                       (click)="onActionIconClick()"></rappider-icon>
+        <rappider-breadcrumb [options]="options"
+                             [cssStyle]="cssStyle"
+                             (optionClick)="onOptionClick($event)">
+        </rappider-breadcrumb>
+      </div>
+      <!-- / BREADCRUMB -->
+      <!-- ----------------------------------------------------------------------------------------- -->
+    </div>
+
+    <!-- ----------------------------------------------------------------------------------------- -->
+    <!-- BUTTONS -->
+    <ng-container *ngFor="let actionButton of actionButtons">
+      <rappider-button [text]="actionButton.text"
+                       [type]="actionButton.type"
+                       [shape]="actionButton.shape"
+                       [size]="actionButton.size"
+                       [transparent]="actionButton.transparent"
+                       [loading]="actionButton.loading"
+                       [block]="actionButton.loading"
+                       [disabled]="actionButton.disabled"
+                       [colorType]="actionButton.colorType"
+                       [icon]="actionButton.icon"
+                       (click)="onClickActionButton(actionButton)"></rappider-button>
+    </ng-container>
+    <!-- / BUTTONS -->
+    <!-- ----------------------------------------------------------------------------------------- -->
+
+    <!-- ----------------------------------------------------------------------------------------- -->
+    <!-- MENU -->
+    <rappider-dropdown-menu *ngIf="dropdownMenu"
+                            [items]="dropdownMenu.items"
+                            [label]="dropdownMenu.label"
+                            [icon]="dropdownMenu.icon"
+                            [triggerType]="dropdownMenu.triggerType"
+                            [placement]="dropdownMenu.placement"
+                            (menuItemClick)="onMenuItemClick($event)"></rappider-dropdown-menu>
+    <!-- / MENU -->
+    <!-- ----------------------------------------------------------------------------------------- -->
+
+  </div>
+
+</section>

@@ -1,0 +1,98 @@
+<div class="card-one"
+     [ngClass]="setImagePositionClass()"
+     (click)="onCardClick()">
+    <div *ngIf="image"
+         class="image-cover">
+        <div class="image">
+            <rappider-image [width]="image.width"
+                            [source]="image.source"
+                            [placeholder]="image.placeholder"
+                            [height]="image.height"
+                            [fallback]="image.fallback"
+                            [alternateText]="image.alternateText"></rappider-image>
+        </div>
+        <div class="image-overlay">
+            <div *ngIf="imageTags?.length"
+                 class="image-tags">
+                <div *ngFor="let tag of imageTags"
+                     class="image-tag">
+                    <rappider-tag [text]="tag.text"
+                                  [mode]="tag.mode"
+                                  [color]="tag.color"
+                                  [checked]="tag.checked"></rappider-tag>
+                </div>
+            </div>
+            <div *ngIf="imageButtons?.length"
+                 class="image-buttons">
+                <div *ngFor="let imageButton of imageButtons"
+                     class="image-button">
+                    <rappider-button [text]="imageButton.text"
+                                     [type]="imageButton.type"
+                                     [shape]="imageButton.shape"
+                                     [size]="imageButton.size"
+                                     [transparent]="imageButton.transparent"
+                                     [loading]="imageButton.loading"
+                                     [block]="imageButton.loading"
+                                     [disabled]="imageButton.disabled"
+                                     [colorType]="imageButton.colorType"
+                                     [icon]="imageButton.icon"
+                                     (click)="onImageButtonClick(imageButton, $event)"></rappider-button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-description-wrapper">
+        <div *ngIf="rate"
+             class="rate">
+            <rappider-rate-display [rate]="rate"></rappider-rate-display>
+        </div>
+        <div *ngIf="titles?.length"
+             class="titles">
+            <div *ngFor="let title of titles"
+                 class="title">
+                <rappider-heading [content]="title.content"
+                                  [type]="title.type"></rappider-heading>
+            </div>
+        </div>
+        <div *ngIf="descriptions?.length"
+             class="descriptions">
+            <div *ngFor="let description of descriptions"
+                 class="description">
+                <rappider-paragraph [content]="description"></rappider-paragraph>
+            </div>
+        </div>
+        <div class="prices-wrapper">
+            <span *ngIf="finalPrice"
+                  class="final-price"> {{ finalPrice | currency: currency }}</span>
+            <span *ngIf="price"
+                  class="price"> {{ price | currency: currency }} </span>
+        </div>
+        <div *ngIf="additionalTags?.length"
+             class="additional-tags">
+            <div *ngFor="let additionalTag of additionalTags"
+                 class="additional-tag">
+                <rappider-tag [text]="additionalTag.text"
+                              [mode]="additionalTag.mode"
+                              [color]="additionalTag.color"
+                              [checked]="additionalTag.checked"></rappider-tag>
+            </div>
+        </div>
+        <div *ngIf="additionalButtons?.length"
+             class="additional-buttons">
+            <div *ngFor="let additionalButton of additionalButtons"
+                 class="additional-button">
+                <rappider-button [text]="additionalButton.text"
+                                 [type]="additionalButton.type"
+                                 [shape]="additionalButton.shape"
+                                 [size]="additionalButton.size"
+                                 [transparent]="additionalButton.transparent"
+                                 [loading]="additionalButton.loading"
+                                 [block]="additionalButton.loading"
+                                 [disabled]="additionalButton.disabled"
+                                 [colorType]="additionalButton.colorType"
+                                 [icon]="additionalButton.icon"
+                                 (click)="onAdditionalButtonClick(additionalButton, $event)"></rappider-button>
+            </div>
+        </div>
+    </div>
+</div>

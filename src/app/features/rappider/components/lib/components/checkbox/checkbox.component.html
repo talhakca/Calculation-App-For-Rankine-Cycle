@@ -1,0 +1,36 @@
+<ng-container *ngIf="checkboxType === CheckboxType.Button; else defaultCheckboxType">
+  <div class="checkbox-button-type">
+    <label nz-tooltip
+           [nzTooltipTitle]="tooltip">
+      <input [(ngModel)]="value"
+             class="content"
+             [ngClass]="cssClass"
+             [ngStyle]="cssStyle"
+             [disabled]="disabled"
+             type="checkbox"
+             (ngModelChange)="onValueChange($event)">
+      <span class="label">
+        <rappider-icon [name]="icon.name"
+                       [type]="icon.type"
+                       [theme]="icon.theme"
+                       [color]="icon.color"></rappider-icon>
+        <span *ngIf="text && icon">&nbsp;&nbsp;</span>
+        {{ text | translate }}
+      </span>
+    </label>
+  </div>
+</ng-container>
+
+<ng-template #defaultCheckboxType>
+  <label class="content"
+         nz-checkbox
+         nz-tooltip
+         [nzTooltipTitle]="tooltip"
+         [(ngModel)]="value"
+         [ngClass]="cssClass"
+         [ngStyle]="cssStyle"
+         [disabled]="disabled"
+         (ngModelChange)="onValueChange($event)">
+    {{ text | translate }}
+  </label>
+</ng-template>

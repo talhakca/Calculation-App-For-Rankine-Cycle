@@ -1,0 +1,52 @@
+<nz-card class="address-card">
+  <div *ngIf="title">
+    <rappider-heading [type]="title.type"
+                      [content]="title.content"></rappider-heading>
+  </div>
+  <div *ngIf="subtitle">
+    <rappider-heading [type]="subtitle.type"
+                      [content]="subtitle.content"></rappider-heading>
+  </div>
+  <div *ngFor="let address of addresses"
+       class="content">
+    <rappider-icon *ngIf="address.icon"
+                   class="icon"
+                   [name]="address.icon.name"
+                   [type]="address.icon.type"
+                   [theme]="address.icon.theme"
+                   [color]="address.icon.color"></rappider-icon>
+    <rappider-text [content]="address.content"></rappider-text>
+  </div>
+  <div class="button-group">
+    <div *ngFor="let button of buttons; let index">
+      <div *ngIf="button.popconfirmTitle; else noPopconfirm">
+        <rappider-button nz-popconfirm
+                         [text]="button.text"
+                         [type]="button.type"
+                         [shape]="button.shape"
+                         [size]="button.size"
+                         [transparent]="button.transparent"
+                         [loading]="button.loading"
+                         [block]="button.loading"
+                         [disabled]="button.disabled"
+                         [colorType]="button.colorType"
+                         [icon]="button.icon"
+                         [nzPopconfirmTitle]="button.popconfirmTitle"
+                         (nzOnConfirm)="onClickButton(button)"></rappider-button>
+      </div>
+      <ng-template #noPopconfirm>
+        <rappider-button [text]="button.text"
+                         [type]="button.type"
+                         [shape]="button.shape"
+                         [size]="button.size"
+                         [transparent]="button.transparent"
+                         [loading]="button.loading"
+                         [block]="button.loading"
+                         [disabled]="button.disabled"
+                         [colorType]="button.colorType"
+                         [icon]="button.icon"
+                         (click)="onClickButton(button)"></rappider-button>
+      </ng-template>
+    </div>
+  </div>
+</nz-card>

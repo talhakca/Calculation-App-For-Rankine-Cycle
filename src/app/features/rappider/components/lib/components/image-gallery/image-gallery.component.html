@@ -1,0 +1,71 @@
+<div class="image-gallery">
+    <div class="thumbnail-container">
+        <ng-container *ngIf="thumbnailTriggerType === ThumbnailTriggerType.Hover">
+            <div *ngFor="let image of images"
+                 class="thumbnail"
+                 [class.active-image-border]="image === activeImage">
+                <rappider-image [source]="image?.source"
+                                [alternateText]="image?.alternateText"
+                                [width]="image?.width"
+                                [height]="image?.height"
+                                [placeholder]="image?.placeholder"
+                                [fallback]="image?.fallback"
+                                (mouseenter)="onClickGalleryImage(image)">
+                </rappider-image>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="thumbnailTriggerType === ThumbnailTriggerType.Click">
+            <div *ngFor="let image of images"
+                 class="thumbnail"
+                 [class.active-image-border]="image === activeImage">
+                <rappider-image [source]="image?.source"
+                                [alternateText]="image?.alternateText"
+                                [width]="image?.width"
+                                [height]="image?.height"
+                                [placeholder]="image?.placeholder"
+                                [fallback]="image?.fallback"
+                                (click)="onClickGalleryImage(image)">
+                </rappider-image>
+            </div>
+        </ng-container>
+    </div>
+    <div *ngIf="activeImage"
+         class="active-image-container">
+        <div *ngIf="activeImage"
+             class="active-image">
+            <rappider-image [source]="activeImage.source"
+                            [alternateText]="activeImage.alternateText"
+                            [width]="activeImage.width"
+                            [height]="activeImage.height"
+                            [placeholder]="activeImage.placeholder"
+                            [fallback]="activeImage.fallback">
+            </rappider-image>
+        </div>
+        <rappider-button *ngIf="previousButton"
+                         class="prev-button"
+                         [text]="previousButton.text"
+                         [type]="previousButton.type"
+                         [shape]="previousButton.shape"
+                         [size]="previousButton.size"
+                         [transparent]="previousButton.transparent"
+                         [loading]="previousButton.loading"
+                         [block]="previousButton.loading"
+                         [disabled]="previousButton.disabled"
+                         [colorType]="previousButton.colorType"
+                         [icon]="previousButton.icon"
+                         (click)="onPreviousButtonClick()"></rappider-button>
+        <rappider-button *ngIf="nextButton"
+                         class="next-button"
+                         [text]="nextButton.text"
+                         [type]="nextButton.type"
+                         [shape]="nextButton.shape"
+                         [size]="nextButton.size"
+                         [transparent]="nextButton.transparent"
+                         [loading]="nextButton.loading"
+                         [block]="nextButton.loading"
+                         [disabled]="nextButton.disabled"
+                         [colorType]="nextButton.colorType"
+                         [icon]="nextButton.icon"
+                         (click)="onNextButtonClick()"></rappider-button>
+    </div>
+</div>

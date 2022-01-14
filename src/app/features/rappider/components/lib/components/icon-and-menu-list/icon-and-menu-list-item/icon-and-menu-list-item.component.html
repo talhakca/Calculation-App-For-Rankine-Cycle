@@ -1,0 +1,22 @@
+<div class="menu-wrapper">
+  <div class="content-wrapper">
+    <rappider-icon *ngIf="icon"
+                   class="icon"
+                   [name]="icon.name"
+                   [color]="icon.color"
+                   [type]="icon.type"
+                   [theme]="icon.theme"></rappider-icon>
+    <div class="text-content">
+      <div class="title"> {{ title }} </div>
+      <div class="description"> {{ description }} </div>
+    </div>
+  </div>
+  <div>
+    <rappider-dropdown-menu *ngIf="dropdownMenu"
+                            [icon]="dropdownMenu.icon"
+                            [label]="dropdownMenu.label"
+                            [triggerType]="dropdownMenu.triggerType"
+                            [items]="dropdownMenu.items"
+                            [placement]="dropdownMenu.placement"></rappider-dropdown-menu>
+  </div>
+</div>

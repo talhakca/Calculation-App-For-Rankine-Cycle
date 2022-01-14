@@ -1,0 +1,35 @@
+.img-area {
+  background-size: cover;
+  background-position: center;
+  height: var(--height-4x);
+}
+
+.content-area {
+  background-color: rgb(255, 251, 251);
+  background-size: cover;
+  height: var(--height-4x);
+  margin-bottom: var(--margin-4x);
+  overflow: hidden;
+}
+
+.link {
+  color: var(--black-color);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.row-area {
+  margin-top: var(--margin-4x);
+  margin-left: var(--margin-2x);
+  margin-right: var(--margin-2x);
+}
+
+.content {
+  height: var(--height-2x);
+  background-size: 100%;
+}
+
+.date-area {
+  margin-top: var(--margin-2x);
+  margin-bottom: var(--margin-2x);
+}

@@ -1,0 +1,24 @@
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.content-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--margin-3x);
+}
+
+.avatar-container {
+  margin-right: var(--margin-4x);
+}
+
+.title {
+  font-size: var(--font-size-medium);
+  font-weight: bold;
+}
+
+.content-container:last-child {
+  margin-bottom: 0px;
+}

@@ -1,0 +1,7 @@
+<div class="error">
+  <div *ngFor="let error of errors">
+    <ng-container *ngIf="error">
+      <small>- {{ error | translate }}</small>
+    </ng-container>
+  </div>
+</div>

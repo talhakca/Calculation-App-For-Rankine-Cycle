@@ -1,0 +1,29 @@
+<section>
+  <div class="container-block">
+    <div *ngIf="avatar"
+         class="user-image">
+      <rappider-avatar [text]="avatar.text"
+                       [iconName]="avatar.iconName"
+                       [shape]="avatar.shape"
+                       [imageUrl]="avatar.imageUrl"
+                       [altText]="avatar.altText"
+                       [cssStyle]="avatar.cssStyle"
+                       [size]="avatar.size"></rappider-avatar>
+    </div>
+    <div class="container-area">
+      <div *ngIf="title"
+           class="title">
+        <rappider-heading [content]="title.content"
+                          [type]="title.type"></rappider-heading>
+      </div>
+      <div class="content">
+        <span [innerHTML]="content"></span>
+      </div>
+      <div *ngIf="subtitle"
+           class="sub-title">
+        <rappider-heading [content]="subtitle.content"
+                          [type]="subtitle.type"></rappider-heading>
+      </div>
+    </div>
+  </div>
+</section>

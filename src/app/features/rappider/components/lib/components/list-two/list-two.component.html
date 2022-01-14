@@ -1,0 +1,36 @@
+<div class="list-two-container">
+  <div *ngIf="title"
+       class="card-header">
+    <rappider-heading [content]="title.content"
+                      [type]="title.type"></rappider-heading>
+  </div>
+  <div class="card-body">
+    <div *ngFor="let item of items">
+      <div class="item-container">
+        <div *ngIf="item.avatar"
+             class="avatar-container">
+          <rappider-avatar [text]="item.avatar.text"
+                           [iconName]="item.avatar.iconName"
+                           [shape]="item.avatar.shape"
+                           [imageUrl]="item.avatar.imageUrl"
+                           [altText]="item.avatar.altText"
+                           [cssStyle]="item.avatar.cssStyle"
+                           [size]="item.avatar.size"></rappider-avatar>
+        </div>
+        <div class="text-container">
+          <div *ngIf="item.textContent"
+               class="item-content">
+            <rappider-text [content]="item.textContent"></rappider-text>
+          </div>
+          <div *ngIf="item.commentText">
+            <rappider-paragraph [content]="item.commentText"></rappider-paragraph>
+          </div>
+          <div *ngIf="item.commentTime"
+               class="comment-time">
+            <rappider-text [content]="item.commentTime"></rappider-text>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

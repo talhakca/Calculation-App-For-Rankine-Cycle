@@ -1,0 +1,28 @@
+<section [class]="sectionClass">
+  <div class="row">
+    <div class="col-9 align-self-center">
+      <rappider-heading *ngIf="title"
+                        class="title"
+                        [content]="title.content"
+                        [type]="title.type">
+      </rappider-heading>
+      <rappider-paragraph *ngIf="content"
+                          class="content"
+                          [content]="content"></rappider-paragraph>
+    </div>
+    <div *ngIf="button"
+         class="col-3 align-self-center text-md-right">
+      <rappider-button [type]="button.type"
+                       [shape]="button.shape"
+                       [text]="button.text"
+                       [size]="button.size"
+                       [transparent]="button.transparent"
+                       [loading]="button.loading"
+                       [block]="button.block"
+                       [disabled]="button.disabled"
+                       [colorType]="button.colorType"
+                       [icon]="button.icon"
+                       (buttonClick)="onButtonClick()"></rappider-button>
+    </div>
+  </div>
+</section>

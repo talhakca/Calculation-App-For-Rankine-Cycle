@@ -1,0 +1,22 @@
+
+.profile-tag{
+  display: flex;
+  justify-content: space-between;
+}
+
+.tags {
+  display: flex;
+  flex-direction: row;
+}
+
+.image{
+  display: flex;
+  align-items: center;
+  padding-top: var(--margin-2x);
+  flex-wrap: wrap;
+  justify-content: space-between;
+  flex-direction: row;
+  rappider-image {
+    margin-right: var(--margin-x);
+  }
+}

@@ -1,0 +1,28 @@
+<article class="text-center m-auto text-white overflow-hidden">
+  <div class="banner-area"
+       [style.background-image]="url"
+       [style.width]="backgroundImage?.width">
+    <div class="main-text-area">
+      <div class="row">
+        <div class="col-12 text-area">
+          <h4 class="text-uppercase text-white">
+            {{ text }}
+          </h4>
+        </div>
+        <div *ngIf="button"
+             class="col-12 mt-5">
+          <rappider-button [type]="button.type"
+                           [shape]="button.shape"
+                           [text]="button.text"
+                           [size]="button.size"
+                           [transparent]="button.transparent"
+                           [loading]="button.loading"
+                           [block]="button.block"
+                           [disabled]="button.disabled"
+                           [colorType]="button.colorType"
+                           [icon]="button.icon"></rappider-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>

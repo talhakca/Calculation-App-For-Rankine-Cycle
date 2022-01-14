@@ -1,0 +1,54 @@
+<nz-card class="payment-summary">
+  <rappider-heading *ngIf="title"
+                    [content]="title.content"
+                    [type]="title.type"></rappider-heading>
+  <div class="content">
+    <div *ngFor="let content of contents">
+      <rappider-heading *ngIf="content.title"
+                        [content]="content.title.content"
+                        [type]="content.title.type"></rappider-heading>
+      <div *ngFor="let item of content.items">
+        <div class="icon-text">
+          <rappider-icon *ngIf="item.icon"
+                         [name]="item.icon.name"
+                         [type]="item.icon.type"
+                         [theme]="item.icon.theme"
+                         [color]="item.icon.color"></rappider-icon>
+          <rappider-text *ngIf="item.text"
+                         [content]="item.text"></rappider-text>
+          <rappider-text *ngIf="item.predefinedText"
+                         [content]="item.predefinedText"></rappider-text>
+        </div>
+        <div class="button">
+          <rappider-button *ngIf="item.button"
+                           [type]="item.button.type"
+                           [shape]="item.button.shape"
+                           [text]="item.button.text"
+                           [size]="item.button.size"
+                           [transparent]="item.button.transparent"
+                           [loading]="item.button.loading"
+                           [block]="item.button.block"
+                           [disabled]="item.button.disabled"
+                           [colorType]="item.button.colorType"
+                           [icon]="item.button.icon"
+                           (click)="onClickButton(item.button)"></rappider-button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngFor="let addinationalContent of addinationalContents"
+       class="addinational-content">
+    <rappider-text *ngIf="addinationalContent.label"
+                   [content]="addinationalContent.label"></rappider-text>
+    <rappider-text *ngIf="addinationalContent.text"
+                   [content]="addinationalContent.text"></rappider-text>
+  </div>
+  <hr *ngIf="footerContents" />
+  <div *ngFor="let footerContent of footerContents"
+       class="footer-content">
+    <rappider-text *ngIf="footerContent.label"
+                   [content]="footerContent.label"></rappider-text>
+    <rappider-text *ngIf="footerContent.text"
+                   [content]="footerContent.text"></rappider-text>
+  </div>
+</nz-card>

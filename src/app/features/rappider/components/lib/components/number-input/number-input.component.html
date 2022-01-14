@@ -1,0 +1,9 @@
+<nz-input-number [(ngModel)]="value"
+                 class="w-100"
+                 [nzStep]="step"
+                 [nzMin]="min"
+                 [nzMax]="max"
+                 [ngClass]="cssClass"
+                 [ngStyle]="cssStyle"
+                 nzInputMode="numeric"
+                 (nzBlur)="onBlur()"></nz-input-number>

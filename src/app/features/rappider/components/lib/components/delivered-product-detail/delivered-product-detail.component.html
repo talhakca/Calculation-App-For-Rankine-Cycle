@@ -1,0 +1,82 @@
+<div class="row">
+  <div class="image-area col-8">
+    <div *ngIf="image"
+         class="image">
+      <rappider-image [source]="image.source"
+                      [width]="image.width"
+                      [alternateText]="image.alternateText"></rappider-image>
+    </div>
+    <div class="product-area">
+      <rappider-text *ngIf="product"
+                     class="product"
+                     [content]="product"></rappider-text>
+      <rappider-text *ngIf="detail"
+                     class="detail"
+                     [content]="detail"></rappider-text>
+    </div>
+  </div>
+  <div class="info-area col-4">
+    <div *ngIf="info"
+         class="info">
+      <rappider-text [content]="info"></rappider-text>
+    </div>
+    <ng-container *ngIf="orderDetails">
+      <div *ngFor="let orderDetail of orderDetails"
+           class="order-detail">
+        <rappider-text [content]="orderDetail"></rappider-text>
+      </div>
+    </ng-container>
+    <rappider-divider></rappider-divider>
+    <div *ngIf="orderDate"
+         class="order-date">
+      <rappider-text [content]="orderDate"></rappider-text>
+    </div>
+  </div>
+</div>
+
+<div class="delivery-container col-8">
+  <div class="delivery-area">
+    <div *ngIf="deliveryTime"
+         class="delivery">
+      <rappider-text [content]="deliveryTime"></rappider-text>
+    </div>
+    <ng-container *ngIf="addresses">
+      <div *ngFor="let address of addresses"
+           class="address">
+        <rappider-text [content]="address"></rappider-text>
+      </div>
+    </ng-container>
+    <div *ngIf="deliveryRate"
+         class="deliveryRate">
+      <rappider-text [content]="deliveryRate"></rappider-text>
+    </div>
+    <rappider-rate-display [rate]="rate"></rappider-rate-display>
+  </div>
+  <div *ngIf="button"
+       class="button-area">
+    <rappider-button [type]="button.type"
+                     [text]="button.text"
+                     [shape]="button.shape"
+                     [size]="button.size"
+                     [transparent]="button.transparent"
+                     [loading]="button.loading"
+                     [block]="button.block"
+                     [disabled]="button.disabled"
+                     [colorType]="button.colorType"
+                     [icon]="button.icon"
+                     (click)="onButtonClick()"></rappider-button>
+  </div>
+</div>
+
+<div class="help-area col-8">
+  <div *ngIf="help"
+       class="help">
+    <rappider-text [content]="help"></rappider-text>
+  </div>
+  <ng-container *ngIf="supports">
+    <div *ngFor="let support of supports"
+         class="support">
+      <rappider-text [content]="support"></rappider-text>
+    </div>
+  </ng-container>
+</div>

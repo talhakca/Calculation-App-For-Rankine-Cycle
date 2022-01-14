@@ -1,0 +1,29 @@
+.img-area {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+}
+
+.tag-area {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+.image {
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: auto;
+}
+
+.title {
+  line-height: 1.4;
+  font-size: var(--font-size-2x);
+  margin-top: var(--margin-4x);
+  margin-bottom: var(--margin-3x);
+}
+
+.button-area {
+  margin-top: var(--margin-3x);
+}

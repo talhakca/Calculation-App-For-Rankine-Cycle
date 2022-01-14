@@ -1,0 +1,42 @@
+<ng-container *ngIf="mask">
+  <!-- TODO: add text mask @talhakca-->
+  <input nz-input
+         [(ngModel)]="value"
+         autocomplete="new-password"
+         [type]="type"
+         [placeholder]="placeholder || '' | translate"
+         [ngClass]="cssClass"
+         [ngStyle]="cssStyle"
+         [nzSize]="height"
+         [disabled]="!!disabled"
+         (blur)="onBlur()" />
+</ng-container>
+<ng-container *ngIf="!mask">
+  <input *ngIf="!mentionSupported"
+         nz-input
+         [(ngModel)]="value"
+         autocomplete="new-password"
+         [type]="type"
+         [placeholder]="placeholder || '' | translate"
+         [nzSize]="height"
+         [ngClass]="cssClass"
+         [ngStyle]="cssStyle"
+         [disabled]="!!disabled"
+         (blur)="onBlur()" />
+  <nz-mention *ngIf="mentionSupported"
+              [nzSuggestions]="mentionValues"
+              [nzValueWith]="valueWith"
+              [nzPrefix]="mentionPrefix">
+    <input nz-input
+           nzMentionTrigger
+           [(ngModel)]="value"
+           autocomplete="new-password"
+           [type]="type"
+           [placeholder]="placeholder || '' | translate"
+           [nzSize]="height"
+           [ngClass]="cssClass"
+           [ngStyle]="cssStyle"
+           [disabled]="!!disabled"
+           (blur)="onBlur()" />
+  </nz-mention>
+</ng-container>

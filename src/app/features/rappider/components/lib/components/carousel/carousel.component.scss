@@ -1,0 +1,12 @@
+.carousel {
+  text-align: center;
+  height: var(--height-3x);
+  line-height: var(--height-3x);
+  background-color: var(--default-color);
+  overflow: hidden;
+}
+
+.content {
+  margin-top: var(--margin-8x);
+  margin-bottom: var(--margin-8x);
+}

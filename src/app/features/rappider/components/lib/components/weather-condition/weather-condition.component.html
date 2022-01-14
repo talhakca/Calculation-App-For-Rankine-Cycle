@@ -1,0 +1,74 @@
+<nz-card class="weather-condition">
+  <div>
+    <div>
+      <rappider-heading *ngIf="title"
+                        [content]="title.content"
+                        [type]="title.type"></rappider-heading>
+    </div>
+    <div>
+      <rappider-heading *ngIf="subtitle"
+                        [content]="subtitle.content"
+                        [type]="subtitle.type"></rappider-heading>
+    </div>
+  </div>
+  <div class="main">
+    <rappider-heading *ngIf="informationText"
+                      [content]="informationText.content"
+                      [type]="informationText.type"></rappider-heading>
+    <rappider-image *ngIf="image"
+                    [source]="image.source"
+                    [alternateText]="image.alternateText"
+                    [width]="image.width"></rappider-image>
+  </div>
+  <div *ngFor="let content of topAdditionalContents"
+       class="additional-content">
+    <rappider-icon *ngIf="content.icon"
+                   [name]="content.icon.name"
+                   [type]="content.icon.type"
+                   [theme]="content.icon.theme"
+                   [color]="content.icon.color"></rappider-icon>
+    <rappider-text *ngIf="content.label"
+                   [content]="content.label"></rappider-text>
+  </div>
+  <div *ngIf="slider"
+       class="slider">
+    <rappider-slider [readonly]="slider.readonly"
+                     [dualMode]="slider.dualMode"
+                     [minRange]="slider.minRange"
+                     [maxRange]="slider.maxRange"
+                     [marks]="slider.marks"
+                     [step]="slider.step"
+                     [cssStyle]="slider.cssStyle"
+                     [cssClass]="slider.cssClass"
+                     (valueChange)="onSliderValueChange($event)"></rappider-slider>
+  </div>
+  <div *ngFor="let content of bottomAdditionalContents"
+       class="additional-area">
+    <rappider-text *ngIf="content.label"
+                   class="text-left"
+                   [content]="content.label"></rappider-text>
+    <rappider-icon *ngIf="content.icon"
+                   class="text-center"
+                   [name]="content.icon.name"
+                   [type]="content.icon.type"
+                   [theme]="content.icon.theme"
+                   [color]="content.icon.color"></rappider-icon>
+    <rappider-text *ngIf="content.additionalText"
+                   class="text-right"
+                   [content]="content.additionalText"></rappider-text>
+  </div>
+  <hr *ngIf="button" />
+  <div>
+    <rappider-button *ngIf="button"
+                     [type]="button.type"
+                     [shape]="button.shape"
+                     [text]="button.text"
+                     [size]="button.size"
+                     [transparent]="button.transparent"
+                     [loading]="button.loading"
+                     [block]="button.block"
+                     [disabled]="button.disabled"
+                     [colorType]="button.colorType"
+                     [icon]="button.icon"></rappider-button>
+  </div>
+</nz-card>

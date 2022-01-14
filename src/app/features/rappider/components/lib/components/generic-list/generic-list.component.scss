@@ -1,0 +1,20 @@
+.list {
+  border: 1px solid #f3f3f3;
+}
+
+:host ::ng-deep .ant-list-item-meta-title {
+  margin-top: 0;
+}
+
+.item-container {
+  padding: 0 10px;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}

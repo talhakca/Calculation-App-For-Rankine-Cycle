@@ -1,0 +1,56 @@
+<ul nz-menu
+    [nzMode]="config?.mode"
+    [nzInlineCollapsed]="isCollapsed"
+    [style.background-color]="config?.backgroundColor"
+    class="sider-menu w-100">
+  <ng-container *ngTemplateOutlet="recursiveMenuList; context:{ $implicit: config?.items }"></ng-container>
+
+  <ng-template #recursiveMenuList
+               let-menus>
+    <ng-container *ngFor="let menu of menus">
+      <li *ngIf="menu?.children?.length; else menuItem"
+          nz-submenu
+          [(nzOpen)]="menu.isExpanded"
+          [nzTitle]="menu?.label | translate"
+          [nzIcon]="menu?.icon"
+          [nzPaddingLeft]="getPaddingLeftValue(menu?.level)"
+          [nzDisabled]="menu?.disabled"
+          [style]="menu?.style">
+        <ul>
+          <ng-container *ngTemplateOutlet="recursiveMenuList; context:{ $implicit: menu?.children }"></ng-container>
+        </ul>
+      </li>
+
+      <ng-template #menuItem>
+        <li nz-menu-item
+            [nzPaddingLeft]="getPaddingLeftValue(menu?.level)"
+            [nzDisabled]="menu?.disabled"
+            [nzSelected]="menu?.selected"
+            nz-tooltip
+            nzTooltipPlacement="right"
+            [nzTooltipTitle]="menu?.tooltip"
+            (click)="menuClick($event, menu)">
+          <ng-container *ngIf="menu?.icon">
+            <div class="menu-item-icon-container">
+              <rappider-icon class="menu-item-icon"
+                             [name]="menu?.icon.name"
+                             [theme]="menu?.icon.theme"
+                             [type]="menu?.icon.type"
+                             [color]="menu?.icon.color"></rappider-icon>
+              <span [style]="menu?.style">{{ menu?.label | translate }}</span>
+              <nz-tag *ngIf="menu?.tag"
+                      class="menu-tag"
+                      [nzColor]="menu?.tagColor">{{menu?.tag}}</nz-tag>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="!menu?.icon">
+            <span [style]="menu?.style">{{ menu?.label | translate }}</span>
+            <nz-tag *ngIf="menu?.tag"
+                    class="menu-tag"
+                    [nzColor]="menu?.tagColor">{{menu?.tag}}</nz-tag>
+          </ng-container>
+        </li>
+      </ng-template>
+    </ng-container>
+  </ng-template>
+</ul>

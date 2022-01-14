@@ -1,0 +1,54 @@
+<nz-card>
+  <div class="card-seven-container">
+    <div *ngIf="image">
+      <rappider-image [source]="image.source"
+                      [width]="image.width"></rappider-image>
+    </div>
+    <div class="container">
+      <div *ngIf="heading"
+           class="card-seven-title">
+        <rappider-heading [content]="heading.content"
+                          [type]="heading.type"></rappider-heading>
+      </div>
+
+      <div class="avatar-area">
+        <div *ngIf="avatar">
+          <rappider-avatar [text]="avatar.text"
+                           [iconName]="avatar.iconName"
+                           [shape]="avatar.shape"
+                           [imageUrl]="avatar.imageUrl"
+                           [altText]="avatar.altText"
+                           [cssStyle]="avatar.cssStyle"
+                           [size]="avatar.size"></rappider-avatar>
+        </div>
+        <div class="author-name">
+          <rappider-label [content]="authorName"></rappider-label>
+        </div>
+
+        <div class="divider">
+          <rappider-divider [type]="dividerType"></rappider-divider>
+          <rappider-label [content]="date | formatDate"></rappider-label>
+        </div>
+      </div>
+      <div class="description">
+        <rappider-paragraph [content]="description">
+        </rappider-paragraph>
+      </div>
+
+      <div *ngIf="button"
+           class="card-seven-button">
+        <rappider-button [type]="button.type"
+                         [text]="button.text"
+                         [shape]="button.shape"
+                         [size]="button.size"
+                         [transparent]="button.transparent"
+                         [loading]="button.loading"
+                         [block]="button.block"
+                         [disabled]="button.disabled"
+                         [colorType]="button.colorType"
+                         [icon]="button.icon"
+                         (click)="onButtonClick()"> </rappider-button>
+      </div>
+    </div>
+  </div>
+</nz-card>

@@ -1,0 +1,69 @@
+<ng-container *ngIf="form">
+
+  <!-- form -->
+  <form [formGroup]="form">
+
+    <!-- rows -->
+    <ng-container formArrayName="rows">
+      <div cdkDropList
+           cdkDropListLockAxis="y"
+           (cdkDropListDropped)="drop($event)">
+        <div *ngFor="let rowForm of getRowsFormArray().controls; let rowIndex = index"
+             cdkDrag
+             [formGroupName]="rowIndex"
+             [cdkDragDisabled]="!orderable"
+             class="list-item">
+
+          <!-- drag & drop button -->
+          <div *ngIf="orderable"
+               class="row-button">
+            <a>
+              <i class="fas fa-bars"></i>
+            </a>
+          </div>
+
+          <!-- columns area -->
+          <ng-container *ngFor="let column of columns">
+
+            <div *ngIf="column.visible !== false"
+                 class="input-container">
+              <input nz-input
+                     [placeholder]="(column.placeholder || '') | translate"
+                     class="w-100"
+                     [formControlName]="column.fieldName"
+                     (ngModelChange)="onRowDataChange(rowIndex)"
+                     (blur)="onBlur()" />
+
+              <div *ngIf="getRowsFormArray()[rowIndex]?.controls[column.fieldName]?.errors?.unique">
+                <rappider-input-error [errors]="['This field must be unique.']"></rappider-input-error>
+              </div>
+
+            </div>
+
+          </ng-container>
+
+          <!-- remove button -->
+          <div class="row-button">
+            <a (click)="removeListItem(rowIndex)">
+              <i class="far fa-trash"></i>
+            </a>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- add button -->
+      <div *ngIf="addButtonVisible !== false">
+        <button nz-button
+                class="default-button"
+                (click)="insertListItem()">
+          <i class="fas fa-plus"></i>&nbsp;
+          {{ addButtonText | translate }}
+        </button>
+      </div>
+
+    </ng-container>
+
+  </form>
+
+</ng-container>

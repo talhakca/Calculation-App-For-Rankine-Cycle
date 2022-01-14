@@ -1,0 +1,26 @@
+.title-bar {
+  width: 100%;
+
+  .bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .main-title {
+    font-size: var(--font-size-large);
+    font-weight: var(--font-weight-medium);
+    margin-bottom: var(--margin-2x);
+  }
+
+  .breadcrumb-icon {
+    display: flex;
+    align-items: center;
+
+    rappider-icon {
+      font-size: var(--font-size-large);
+      cursor: pointer;
+      margin-right: var(--margin-2x);
+    }
+  }
+}

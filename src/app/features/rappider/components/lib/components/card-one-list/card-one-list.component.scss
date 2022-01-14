@@ -1,0 +1,67 @@
+.card-one-list {
+    position: relative;
+    width: 100%;
+    .list-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: var(--margin-2x);
+        padding: 0px var(--padding-6x);
+    }
+
+    .list-body {
+        display: flex;
+        position: relative;
+        padding: 0px var(--padding-3x);
+        overflow: hidden;
+        min-width: 100%;
+    }
+
+    .list-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+
+        rappider-card-one {
+            width: 100%;
+        }
+    }
+
+    .carousel-dot {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: var(--margin-4x);
+
+        .dot {
+            margin-right: var(--margin-2x);
+            background-color: #808080;
+            opacity: 0.5;
+            transition: 0.3s;
+            width: 15px;
+            height: 5px;
+            cursor: pointer;
+            border-radius: 7px;
+        }
+
+        .dot-active {
+            opacity: 1;
+            width: 20px;
+            height: 7px;
+            cursor: default;
+        }
+    }
+
+    .back-button {
+        position: absolute;
+        top: 50%;
+        left: -20px;
+    }
+
+    .next-button {
+        position: absolute;
+        top: 50%;
+        right: -20px;
+    }
+}

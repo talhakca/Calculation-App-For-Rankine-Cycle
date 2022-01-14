@@ -1,0 +1,40 @@
+<section class="product-preview-card-container">
+  <div class="card-body">
+    <div class="image-title">
+      <rappider-heading *ngIf="additionalContent"
+                        [content]="additionalContent.content"
+                        [type]="additionalContent.type"></rappider-heading>
+    </div>
+    <div *ngIf="image"
+         class="image-container">
+      <a [routerLink]="imageRedirectUrl">
+        <rappider-image [source]="image.source"
+                        [width]="image.width"
+                        [alternateText]="image.alternateText"></rappider-image>
+      </a>
+    </div>
+    <ng-container *ngIf="productName">
+      <a [routerLink]="redirectUrl">
+        <rappider-heading class="product-heading"
+                          [content]="productName.content"
+                          [type]="productName.type"></rappider-heading>
+      </a>
+    </ng-container>
+    <div class="paragraph-container">
+      <rappider-paragraph [content]="description"></rappider-paragraph>
+    </div>
+    <div class="price-container">
+      <rappider-heading *ngIf="priceTitle"
+                        [content]="priceTitle.content"
+                        [type]="priceTitle.type"></rappider-heading>
+      <ng-container *ngIf="icon">
+        <a [routerLink]="redirectUrl">
+          <rappider-icon [name]="icon.name"
+                         [type]="icon.type"
+                         [theme]="icon.theme"
+                         [color]="icon.color"></rappider-icon>
+        </a>
+      </ng-container>
+    </div>
+  </div>
+</section>

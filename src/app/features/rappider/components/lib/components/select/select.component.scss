@@ -1,0 +1,16 @@
+nz-select {
+  margin-right: 8px;
+  width: 100%;
+}
+
+.buttons-area {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: var(--padding-2x);
+  background-color: var(--inner-layout-background-color);
+}
+
+rappider-button {
+  padding: var(--margin-2x);
+}

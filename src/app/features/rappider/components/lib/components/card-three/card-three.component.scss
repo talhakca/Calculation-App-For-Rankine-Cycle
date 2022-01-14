@@ -1,0 +1,36 @@
+.card-area {
+  border: var(--border-color);
+  padding: var(--padding-2x);
+  display: flex;
+  align-items: flex-start;
+}
+
+.image-area {
+  display: inline-block;
+}
+
+.content-area {
+  display: inline-block;
+  width: 100%;
+  margin-left: var(--margin-3x);
+}
+
+.image-area:hover .image {
+  transform: var(--default-hover-transform);
+  transition: var(--default-hover-transition);
+  overflow: hidden;
+}
+
+.title,
+.subtitle {
+  margin-top: var(--margin-x);
+}
+
+.additional-content {
+  margin-top: var(--margin-x);
+}
+
+.button {
+  float: right;
+  position: initial;
+}

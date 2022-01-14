@@ -1,0 +1,34 @@
+.drag-drop-file-upload {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 70px 0 !important;
+  background-color: #f3f3f3;
+  border: 2px dashed #d3d3d3;
+  text-align: center;
+  font-weight: bold;
+  color: #333;
+
+  .drag-drop-file-upload-text {
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  &.hover {
+    color: cornflowerblue;
+    border-color: cornflowerblue;
+  }
+}
+
+.divider-text {
+  margin: 10px 0;
+  text-align: center;
+}
+
+.browse-file-upload {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}

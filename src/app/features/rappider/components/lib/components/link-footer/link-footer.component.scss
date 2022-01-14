@@ -1,0 +1,33 @@
+.link-footer-container {
+  border: var(--primary-container-border unset)
+}
+
+.text {
+  padding: var(--padding-x) 0;
+}
+
+.anchor {
+
+  font-weight: var(--font-weight-medium);
+
+  &:hover {
+    color: var(--footer-directory-title-color-hover);
+  }
+}
+
+.heading {
+  margin-bottom: var(--margin-3x);
+  padding-top: var(--padding-3x);
+  color: var(--footer-text-color);
+}
+
+.area {
+  display: flex;
+  justify-content: space-evenly;
+  background-color: var(--footer-background);
+
+}
+
+.text-area {
+  margin-bottom: var(--margin-3x);
+}

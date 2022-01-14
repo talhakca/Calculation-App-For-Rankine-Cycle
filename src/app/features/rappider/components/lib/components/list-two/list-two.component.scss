@@ -1,0 +1,17 @@
+.list-two-container {
+  display: inline-block;
+  margin: var(--margin-4x);
+}
+
+.avatar-container {
+  margin-right: var(--margin-4x);
+  display: inline-block;
+}
+
+.text-container {
+  margin-bottom: var(--margin-4x);
+}
+
+.item-container {
+  display: flex;
+}

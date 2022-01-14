@@ -1,0 +1,20 @@
+.list-item {
+  display: flex;
+  margin-bottom: 10px;
+
+  .input-container {
+    flex: 1;
+  }
+
+  & > * {
+    margin-right: 10px;
+
+    &:nth-last-of-type(1) {
+      margin-right: 0;
+    }
+  }
+}
+
+.row-button {
+  margin-top: 5px;
+}

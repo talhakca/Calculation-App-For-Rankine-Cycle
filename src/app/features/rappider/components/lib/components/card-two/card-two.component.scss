@@ -1,0 +1,61 @@
+.image {
+  height: auto;
+  width: 100%;
+}
+
+.container-area {
+  position: relative;
+}
+
+.tag-area {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 1;
+}
+
+.title-area {
+  font-size: var(--font-size-xx-large);
+  font-weight: 300;
+  margin-top: var(--margin-4x);
+}
+
+a {
+  text-decoration: none;
+}
+
+section {
+  padding: var(--padding-x);
+}
+
+.main-area {
+  margin-left: var(--margin-4x);
+  margin-right: var(--margin-4x);
+}
+
+.content-area {
+  margin-top: var(--margin-4x);
+}
+
+.profile-image {
+  border-radius: 50%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 35px;
+  width: 35px;
+}
+
+.source-name-area {
+  display: inline-block;
+  margin-left: var(--margin-2x);
+  font-weight: 400;
+}
+
+.user-area {
+  margin: auto;
+  margin-bottom: var(--margin-4x);
+}
+
+.img-area {
+  display: inline-block;
+}

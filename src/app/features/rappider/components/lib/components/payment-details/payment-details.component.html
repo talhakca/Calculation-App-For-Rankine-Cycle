@@ -1,0 +1,81 @@
+<section class="section">
+  <div *ngIf="headerTitle || headerContent">
+    <div class="header-content">
+      <rappider-text [content]="headerTitle"></rappider-text>
+      <div>
+        <rappider-text [content]="headerContent"></rappider-text>
+      </div>
+    </div>
+  </div>
+  <div *ngFor="let item of cardItems">
+    <hr>
+    <div class="card-area">
+      <a (click)="onRouterClick($event)">
+
+        <div *ngIf="item.image"
+              class="image">
+          <rappider-image [source]="item.image.source"
+                          [width]="item.image.width"></rappider-image>
+
+        </div>
+      </a>
+      <div class="content-area">
+        <div *ngIf="item.title"
+             class="title">
+          <rappider-heading [type]="item.title.type"
+                            [content]="item.title.content"></rappider-heading>
+
+          <div *ngIf="item.additionalContent"
+               class="additional-content">
+            <rappider-text [content]="item.additionalContent"></rappider-text>
+          </div>
+
+
+        </div>
+        <div class="quantity">
+          <rappider-dropdown-menu [items]="dropdownMenuItems"
+                                  [label]="dropdownMenuLabel"
+                                  [icon]="dropdownMenuIcon"
+                                  [triggerType]="dropdownMenuTriggerType"
+                                  [placement]="dropdownMenuPlacement"
+                                  (dropdownItemClick)="onDropdownMenuItemClick($event)"
+                                  (menuItemClick)="onMenuItemClick($event)">
+          </rappider-dropdown-menu>
+        </div>
+        <div *ngIf="item.subtitle"
+             class="subtitle">
+          <rappider-heading [type]="item.subtitle.type"
+                            [content]="item.subtitle.content"></rappider-heading>
+          <div *ngIf="item.button"
+               class="button">
+            <rappider-button [transparent]="item.button.transparent"
+                             [colorType]="item.button.colorType"
+                             [shape]="item.button.shape"
+                             [type]="item.button.type"
+                             [text]="item.button.text"
+                             [size]="item.button.size"
+                             [icon]="item.button.icon"
+                             [loading]="item.button.loading"
+                             [block]="item.button.block"
+                             [disabled]="item.button.disabled"
+                             [icon]="item.button.icon"
+                             (click)="onButtonClick($event)">
+            </rappider-button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+    <hr>
+  </div>
+
+  <div *ngIf="footerTitle || footerContent">
+    <div class="header-content">
+      <rappider-text [content]="footerTitle"></rappider-text>
+      <div>
+        <rappider-text [content]="footerContent"></rappider-text>
+      </div>
+    </div>
+  </div>
+</section>

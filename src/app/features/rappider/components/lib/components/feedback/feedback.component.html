@@ -1,0 +1,25 @@
+<nz-result [nzIcon]="iconArea"
+           [nzTitle]="titleArea"
+           [nzSubTitle]="subTitleArea">
+  <div nz-result-extra>
+    <ng-container *ngFor="let button of buttons">
+      <button nz-button
+              [nzType]="button.type"
+              (click)="onButtonClick(button)">{{ button.content | translate }}</button>
+    </ng-container>
+  </div>
+  <ng-template #iconArea>
+    <i [ngClass]="icon"
+       class="fa-7x"></i>
+  </ng-template>
+  <ng-template #titleArea>
+    <div class="title">
+      {{ title | translate }}
+    </div>
+  </ng-template>
+  <ng-template #subTitleArea>
+    <div class="sub-title">
+      {{ subTitle | translate }}
+    </div>
+  </ng-template>
+</nz-result>

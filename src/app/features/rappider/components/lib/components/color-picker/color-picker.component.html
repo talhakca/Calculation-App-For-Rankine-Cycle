@@ -1,0 +1,15 @@
+<input nz-input
+       [(ngModel)]="value"
+       [value]="value"
+       [(colorPicker)]="value"
+       [nzSize]="height"
+       [ngClass]="cssClass"
+       [ngStyle]="cssStyle"
+       [cpSaveClickOutside]="saveClickOutside || false"
+       [cpOKButton]="okButtonVisible || true"
+       [cpOKButtonText]="okButtonText || 'SHARED.SAVE' | translate"
+       [cpOKButtonClass]="okButtonClass || 'btn btn-primary btn-xs'"
+       [cpCancelButton]="cancelButtonVisible || true"
+       [cpCancelButtonText]="cancelButtonText || 'SHARED.CANCEL' | translate"
+       [cpCancelButtonClass]="cancelButtonClass || 'btn btn-danger btn-xs'"/>
+<rappider-button [style.background]="value"></rappider-button>

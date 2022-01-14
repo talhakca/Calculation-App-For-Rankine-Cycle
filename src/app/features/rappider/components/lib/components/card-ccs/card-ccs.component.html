@@ -1,0 +1,83 @@
+<nz-card nzHoverable
+         [nzCover]="coverTemplate"
+         [nzActions]="[firstActionTemplate, secondActionTemplate, thirdActionTemplate]"
+         (click)="itemClicked(data)">
+    <div class="card-content-container">
+        <div class="card-content"
+             (click)="itemClicked(data)">
+            <ng-container *ngIf="title">
+                <rappider-heading [content]="title.content"
+                                  [type]="title.type"></rappider-heading>
+            </ng-container>
+            <ng-container *ngFor="let subtitle of subtitles">
+                <rappider-heading [content]="subtitle.content"
+                                  [type]="subtitle.type"></rappider-heading>
+            </ng-container>
+            <ng-container *ngIf="description">
+                <rappider-text [content]="description"></rappider-text>
+            </ng-container>
+        </div>
+    </div>
+</nz-card>
+
+<ng-template #coverTemplate>
+    <ng-container *ngIf="image">
+        <rappider-image class="cover-img"
+                        [source]="image.source"
+                        [width]="image.width"
+                        [height]="image.height"
+                        [placeholder]="image.placeholder"
+                        [alternateText]="image.alternateText"
+                        [fallback]="image.fallback"
+                        [disablePreview]="image.disablePreview"></rappider-image>
+    </ng-container>
+</ng-template>
+
+<ng-template #firstActionTemplate>
+    <ng-container *ngIf="firstActionButton">
+        <rappider-button [transparent]="firstActionButton.transparent"
+                         [colorType]="firstActionButton.colorType"
+                         [shape]="firstActionButton.shape"
+                         [type]="firstActionButton.type"
+                         [text]="firstActionButton.text"
+                         [size]="firstActionButton.size"
+                         [icon]="firstActionButton.icon"
+                         [loading]="firstActionButton.loading"
+                         [block]="firstActionButton.block"
+                         [disabled]="firstActionButton.disabled"
+                         [icon]="firstActionButton.icon"
+                         (click)="actionClicked($event,firstActionButton)"></rappider-button>
+    </ng-container>
+</ng-template>
+<ng-template #secondActionTemplate>
+    <ng-container *ngIf="secondActionButton">
+        <rappider-button [transparent]="secondActionButton.transparent"
+                         [colorType]="secondActionButton.colorType"
+                         [shape]="secondActionButton.shape"
+                         [type]="secondActionButton.type"
+                         [text]="secondActionButton.text"
+                         [size]="secondActionButton.size"
+                         [icon]="secondActionButton.icon"
+                         [loading]="secondActionButton.loading"
+                         [block]="secondActionButton.block"
+                         [disabled]="secondActionButton.disabled"
+                         [icon]="secondActionButton.icon"
+                         (click)="actionClicked($event,secondActionButton)"></rappider-button>
+    </ng-container>
+</ng-template>
+<ng-template #thirdActionTemplate>
+    <ng-container *ngIf="thirdActionButton">
+        <rappider-button [transparent]="thirdActionButton.transparent"
+                         [colorType]="thirdActionButton.colorType"
+                         [shape]="thirdActionButton.shape"
+                         [type]="thirdActionButton.type"
+                         [text]="thirdActionButton.text"
+                         [size]="thirdActionButton.size"
+                         [icon]="thirdActionButton.icon"
+                         [loading]="thirdActionButton.loading"
+                         [block]="thirdActionButton.block"
+                         [disabled]="thirdActionButton.disabled"
+                         [icon]="thirdActionButton.icon"
+                         (click)="actionClicked($event,thirdActionButton)"></rappider-button>
+    </ng-container>
+</ng-template>

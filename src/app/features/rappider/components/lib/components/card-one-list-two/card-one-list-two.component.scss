@@ -1,0 +1,10 @@
+.card-one-list-two{
+    display: flex;
+    flex-wrap: wrap;
+    
+    ::ng-deep {
+        .card-one {
+            width: min-content !important;
+        }
+    }
+}

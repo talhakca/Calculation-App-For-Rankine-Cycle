@@ -1,0 +1,29 @@
+:host {
+  @extend .full-block !optional;
+}
+
+.content-area {
+  background-color: black;
+  background-size: cover;
+  padding: 90px;
+  text-align: center;
+}
+
+.img-area {
+  background-size: cover;
+  background-position: center;
+}
+
+.button-area {
+  margin-top: var(--margin-5x);
+}
+
+.content {
+  font-size: var(--font-size-2x);
+}
+
+.banner-split {
+  align-items: stretch;
+  width: 100%;
+  height: auto;
+}

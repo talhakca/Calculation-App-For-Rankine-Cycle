@@ -1,0 +1,25 @@
+<div class="image-timer">
+  <div *ngIf="imageTitle"
+        class="title">
+    <rappider-heading [type]="imageTitle.type"
+                      [content]="imageTitle.content"></rappider-heading>
+  </div>
+  <div *ngIf="additionalContent"
+        class="content">
+    <rappider-text [content]="additionalContent"></rappider-text>
+  </div>
+  <div *ngIf="image"
+        class="image">
+    <rappider-image [source]="image.source"
+                    [width]="image.width"></rappider-image>
+  </div>
+  <div *ngIf="countdown"
+        class="countdown">
+    <rappider-countdown [deadline]="countdown.deadline"
+                        [title]="countdown.title"
+                        [format]="countdown.format"
+                        [prefix]="countdown.prefix"
+                        (click)="onCountdownFinish(countdown)"></rappider-countdown>
+
+  </div>
+</div>

@@ -1,0 +1,49 @@
+:host::ng-deep {
+  .ant-card-body {
+    padding: 0;
+  }
+
+  .ant-card-meta {
+    padding: 24px;
+  }
+}
+
+.card-item {
+  margin-bottom: 10px;
+
+  &:nth-last-of-type(1) {
+    margin-bottom: 0;
+  }
+
+  .card {
+    width: 100%;
+
+    .title {
+      font-weight: bold;
+    }
+
+    .sub-title {
+      font-size: 14px;
+    }
+  }
+
+  .icon {
+    display: inline-block;
+    min-width: 15px;
+    text-align: center;
+  }
+
+  .button-area {
+    width: 100%;
+    padding: 10px 0;
+    background-color: #fafafa;
+    border-top: 1px solid #e8e8e8;
+
+    .card-button {
+      width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}

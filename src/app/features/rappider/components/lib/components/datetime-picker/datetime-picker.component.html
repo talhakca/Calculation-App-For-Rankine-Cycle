@@ -1,0 +1,7 @@
+<rappider-date-picker class="date-picker"
+                      [(ngModel)]="date"
+                      [minSelectableDate]="minSelectableDate"
+                      [maxSelectableDate]="maxSelectableDate"
+                      (ngModelChange)="onValueChange()"></rappider-date-picker>
+<rappider-time-picker [(ngModel)]="time"
+                      (ngModelChange)="onValueChange()"></rappider-time-picker>

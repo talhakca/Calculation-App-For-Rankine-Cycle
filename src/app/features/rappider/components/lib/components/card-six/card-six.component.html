@@ -1,0 +1,55 @@
+<div class="card-six-container">
+  <nz-card [nzCover]="coverTemplate">
+
+    <div *ngIf="title"
+         class="card-six-title">
+      <rappider-heading [content]="title.content"
+                        [type]="title.type"></rappider-heading>
+    </div>
+
+    <div *ngIf="description"
+         class="description-area">
+      <rappider-text [content]="description">
+      </rappider-text>
+    </div>
+
+    <div class="date-container">
+      <div *ngIf="button"
+           class="card-six-button">
+        <rappider-button [type]="button.type"
+                         [shape]="button.shape"
+                         [text]="button.text"
+                         [size]="button.size"
+                         [transparent]="button.transparent"
+                         [loading]="button.loading"
+                         [block]="button.block"
+                         [disabled]="button.disabled"
+                         [colorType]="button.colorType"
+                         [icon]="button.icon"></rappider-button>
+      </div>
+    </div>
+
+    <div *ngIf="avatar"
+         class="avatar-container">
+      <rappider-avatar [text]="avatar.text"
+                       [iconName]="avatar.iconName"
+                       [shape]="avatar.shape"
+                       [imageUrl]="avatar.imageUrl"
+                       [altText]="avatar.altText"
+                       [cssStyle]="avatar.cssStyle"
+                       [size]="avatar.size"></rappider-avatar>
+      <div *ngIf="authorName"
+           class="author-name">
+        <rappider-text [content]="authorName"></rappider-text>
+      </div>
+    </div>
+
+    <ng-template #coverTemplate>
+      <rappider-image *ngIf="image"
+                      [source]="image.source"
+                      [alternateText]="image.alternateText"
+                      [width]="image.width"></rappider-image>
+    </ng-template>
+
+  </nz-card>
+</div>

@@ -1,0 +1,25 @@
+.space {
+  margin: var(--margin-2x);
+}
+
+.price-area {
+  font-size: var(--font-size-x-large);
+}
+
+.content-text {
+  font-weight: var(--font-weight-medium);
+}
+
+.text-area {
+  width: 100%;
+}
+
+.bottom-area {
+  display: flex;
+  margin-left: var(--margin-2x);
+}
+
+.select-area {
+  display: flex;
+  align-items: center;
+}

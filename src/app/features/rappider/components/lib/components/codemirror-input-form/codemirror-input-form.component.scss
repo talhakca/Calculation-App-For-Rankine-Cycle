@@ -1,0 +1,23 @@
+pre {
+  margin-bottom: 0;
+  padding: var(--padding-2x);
+}
+
+/* class name comes from ngx-codemirror */
+.CodeMirror {
+  border: 1px solid #ddd;
+  border-top: 0;
+  border-radius: 0 0 5px 5px;
+}
+
+.codemirror-toolbar {
+  background-color: rgb(247, 247, 247);
+  border: 1px solid #ddd;
+  border-radius: 5px 5px 0 0;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--margin-3x);
+}

@@ -1,0 +1,22 @@
+.main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.additional-content {
+  padding: var(--padding-2x) 0px;
+  rappider-icon {
+    margin-right: var(--margin-3x);
+  }
+}
+
+.additional-area {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding: var(--padding-3x) 0px;
+}
+
+.slider {
+  padding: var(--padding-2x);
+}

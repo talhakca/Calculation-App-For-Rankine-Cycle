@@ -1,0 +1,15 @@
+<ng-container *ngIf="header">
+  <rappider-heading [content]="header.content"
+                    [type]="header.type"></rappider-heading>
+</ng-container>
+<div class="items"
+     [style.flex-direction]="direction">
+  <div *ngFor="let mappedOption of mappedOptions"
+       class="checkbox">
+    <rappider-checkbox [(ngModel)]="mappedOption.isSelected"
+                       [text]="mappedOption.key"
+                       [cssStyle]="mappedOption.cssStyle"
+                       [cssClass]="mappedOption.cssClass"
+                       (ngModelChange)="onValueChange(mappedOption)"></rappider-checkbox>
+  </div>
+</div>

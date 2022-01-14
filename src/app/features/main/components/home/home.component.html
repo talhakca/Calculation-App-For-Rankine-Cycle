@@ -1,0 +1,18 @@
+<div class="container-fluid">
+  <!-- Component ID: 93155969-d6c6-4516-8a83-0bd95dc6349a -->
+  <nz-spin [nzSpinning]="isProjectsLoading">
+    <ng-container *ngIf="projects; else createProject">
+      <rappider-list-grid id="rappider-list-grid-component-0"
+                          class="rappider-list-grid-component-0"
+                          [config]="RappiderListGridComponent_0.config"
+                          [data]="projects"
+                          [loading]="RappiderListGridComponent_0.loading"
+                          (columnActionClick)="onProjectSelect($event)"
+                          (listActionClick)="onClickNewProject()"></rappider-list-grid>
+    </ng-container>
+    <ng-template #createProject>
+      You don't have any projects. <rappider-button text="Click here to create one."
+                       (click)="onClickNewProject()"></rappider-button>
+    </ng-template>
+  </nz-spin>
+</div>

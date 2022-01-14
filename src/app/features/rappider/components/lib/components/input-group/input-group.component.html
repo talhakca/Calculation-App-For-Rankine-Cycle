@@ -1,0 +1,62 @@
+<nz-input-group [nzSuffix]="suffixTemplate"
+                [nzPrefix]="prefixTemplate">
+  <rappider-textbox class="input-group-textbox"
+                    [(ngModel)]="value"
+                    [placeholder]="textbox?.placeholder"
+                    [type]="textbox?.type"
+                    [mask]="textbox?.mask"
+                    [maskGuide]="textbox?.maskGuide"
+                    [height]="textbox?.height"
+                    [cssStyle]="textbox?.cssStyle"
+                    [cssClass]="textbox?.cssClass"
+                    [disabled]="textbox?.disabled"
+                    [mentionSupported]="textbox?.mentionSupported"
+                    [mentionPrefix]="textbox?.mentionPrefix"
+                    [mentionValues]="textbox?.mentionValues"
+                    (blur)="onBlur()">
+  </rappider-textbox>
+</nz-input-group>
+
+<ng-template #prefixTemplate>
+  <rappider-icon *ngIf="prefixIcon"
+                 [name]="prefixIcon.name"
+                 [type]="prefixIcon.type"
+                 [theme]="prefixIcon.theme"
+                 [color]="prefixIcon.color"></rappider-icon>
+  <ng-container *ngIf="prefixIcon && prefixButton">
+    &nbsp;
+  </ng-container>
+  <rappider-button *ngIf="prefixButton"
+                   [type]="prefixButton.type"
+                   [shape]="prefixButton.shape"
+                   [text]="prefixButton.text"
+                   [size]="prefixButton.size"
+                   [transparent]="prefixButton.transparent"
+                   [loading]="prefixButton.loading"
+                   [block]="prefixButton.block"
+                   [disabled]="prefixButton.disabled"
+                   [colorType]="prefixButton.colorType"
+                   [icon]="prefixButton.icon"></rappider-button>
+</ng-template>
+
+<ng-template #suffixTemplate>
+  <rappider-icon *ngIf="suffixIcon"
+                 [name]="suffixIcon.name"
+                 [type]="suffixIcon.type"
+                 [theme]="suffixIcon.theme"
+                 [color]="suffixIcon.color"></rappider-icon>
+  <ng-container *ngIf="suffixIcon && suffixButton">
+    &nbsp;
+  </ng-container>
+  <rappider-button *ngIf="suffixButton"
+                   [type]="suffixButton.type"
+                   [shape]="suffixButton.shape"
+                   [text]="suffixButton.text"
+                   [size]="suffixButton.size"
+                   [transparent]="suffixButton.transparent"
+                   [loading]="suffixButton.loading"
+                   [block]="suffixButton.block"
+                   [disabled]="suffixButton.disabled"
+                   [colorType]="suffixButton.colorType"
+                   [icon]="suffixButton.icon"></rappider-button>
+</ng-template>

@@ -1,0 +1,10 @@
+<!-- CONTENT -->
+<a (click)="onFileSelectOpen()">
+  <ng-content></ng-content>
+</a>
+
+<!-- HIDDEN FILE INPUT -->
+<input type="file"
+       id="file-select"
+       multiple="multiple"
+       class="d-none" />

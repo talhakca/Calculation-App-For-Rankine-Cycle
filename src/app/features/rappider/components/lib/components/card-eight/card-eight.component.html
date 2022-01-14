@@ -1,0 +1,49 @@
+<div class="card-eight-area">
+  <nz-card>
+    <div *ngIf="heading"
+         class="card-header">
+      <rappider-heading [content]="heading.content"
+                        [type]="heading.type"></rappider-heading>
+    </div>
+
+    <div class="card-eight-container">
+      <div *ngIf="text"
+           class="number-text">
+        <rappider-text [content]="text"></rappider-text>
+      </div>
+
+      <div>
+        <div *ngIf="description"
+             class="text-area">
+          <rappider-text [content]="description"></rappider-text>
+        </div>
+
+        <div *ngIf="additionalContent"
+             class="text-area">
+          <rappider-text [content]="additionalContent"></rappider-text>
+        </div>
+
+        <div *ngIf="button">
+          <rappider-button [type]="button.type"
+                           [text]="button.text"
+                           [shape]="button.shape"
+                           [size]="button.size"
+                           [transparent]="button.transparent"
+                           [loading]="button.loading"
+                           [block]="button.block"
+                           [disabled]="button.disabled"
+                           [colorType]="button.colorType"
+                           [icon]="button.icon"></rappider-button>
+        </div>
+
+        <div *ngIf="icon"
+             class="icon">
+          <rappider-icon [name]="icon.name"
+                         [type]="icon.type"
+                         [theme]="icon.theme"
+                         [color]="icon.color"></rappider-icon>
+        </div>
+      </div>
+    </div>
+  </nz-card>
+</div>

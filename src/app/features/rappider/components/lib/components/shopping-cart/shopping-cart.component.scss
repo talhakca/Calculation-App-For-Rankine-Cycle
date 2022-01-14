@@ -1,0 +1,33 @@
+.heading {
+  background-color: var(--inner-layout-background-color);
+  padding-top: var(--padding-2x);
+}
+
+.price {
+  margin-right: var(--margin-4x);
+  font-size: var(--font-size-large);
+}
+
+.total {
+  margin-right: var(--margin-4x);
+  font-size: var(--font-size-large);
+}
+
+.quantity-area {
+  display: flex;
+  align-items: center;
+}
+
+.product-area {
+  ::ng-deep .card-area {
+    margin-top: var(--margin-4x);
+    border: none;
+    padding-left: 0px;
+  }
+}
+
+.row-element {
+  align-items: center;
+  display: flex;
+  justify-content: flex-start;
+}

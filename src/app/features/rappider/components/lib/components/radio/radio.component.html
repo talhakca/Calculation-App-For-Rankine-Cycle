@@ -1,0 +1,14 @@
+<ng-container *ngIf="isValid; else notValid">
+  <nz-radio-group [(ngModel)]="value"
+                  (ngModelChange)="onValueChange($event)">
+    <label *ngFor="let option of options"
+           [ngClass]="cssClass"
+           [ngStyle]="cssStyle"
+           nz-radio
+           [nzValue]="option.value">{{ option.key | translate}}</label>
+  </nz-radio-group>
+</ng-container>
+
+<ng-template #notValid>
+  {{ setInvalidConfigText() | translate }}
+</ng-template>

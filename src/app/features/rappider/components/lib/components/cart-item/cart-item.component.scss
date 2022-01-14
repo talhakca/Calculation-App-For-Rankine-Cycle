@@ -1,0 +1,45 @@
+.rappider-cart-item {
+  display: flex;
+}
+
+.details-button {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.title-area {
+  display: flex;
+  justify-content: space-between;
+}
+
+.additional-items {
+  display: flex;
+  justify-content: space-between;
+}
+
+.price-area {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.additional-item-button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.image-area {
+  display: flex;
+  width: 20%;
+  margin-right: var(--margin-4x);
+}
+
+.content-area {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.dropdown-area {
+  margin-bottom: var(--margin-5x);
+}

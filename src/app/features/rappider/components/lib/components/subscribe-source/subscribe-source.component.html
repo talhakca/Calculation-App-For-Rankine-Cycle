@@ -1,0 +1,28 @@
+<section class="p-5">
+  <div class="container-area">
+    <div class="row align-items-start">
+      <div class="col-7">
+        <div *ngIf="heading"
+             class="heading">
+          <rappider-heading [content]="heading.content"
+                            [type]="heading.type"></rappider-heading>
+        </div>
+        <div *ngIf="content"
+             class="content">
+          <rappider-paragraph [content]="content"></rappider-paragraph>
+        </div>
+      </div>
+      <div class="col-5">
+        <div *ngIf="inputGroup"
+             class="input-group">
+          <rappider-input-group [(ngModel)]="value"
+                                [prefixIcon]="inputGroup.prefixIcon"
+                                [prefixButton]="inputGroup.prefixButton"
+                                [suffixIcon]="inputGroup.suffixIcon"
+                                [suffixButton]="inputGroup.suffixButton"
+                                [textbox]="inputGroup.textbox"></rappider-input-group>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

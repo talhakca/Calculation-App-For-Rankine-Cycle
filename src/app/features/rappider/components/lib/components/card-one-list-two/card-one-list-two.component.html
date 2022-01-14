@@ -1,0 +1,19 @@
+<div class="card-one-list-two">
+    <ng-container *ngFor="let item of items">
+        <rappider-card-one [data]="item.data"
+                           [image]="item.image"
+                           [imageTags]="item.imageTags"
+                           [imageButtons]="item.imageButtons"
+                           [rate]="item.rate"
+                           [titles]="item.titles"
+                           [currency]="item.currency"
+                           [finalPrice]="item.finalPrice"
+                           [price]="item.price"
+                           [additionalTags]="item.additionalTags"
+                           [additionalButtons]="item.additionalButtons"
+                           [descriptions]="item.descriptions"
+                           (cardClick)="onCardClick($event, item)"
+                           (imageButtonClick)="onImageButtonClick($event, item)"
+                           (additionalButtonClick)="onAdditionalButtonClick($event, item)"></rappider-card-one>
+    </ng-container>
+</div>

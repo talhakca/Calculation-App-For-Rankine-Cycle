@@ -1,0 +1,60 @@
+<ng-container *ngIf="grouppedOptions">
+  <nz-select [(ngModel)]="value"
+             nzAllowClear
+             [nzMode]="settings?.mode || DEFAULT_MODE"
+             [nzDropdownMatchSelectWidth]="dropdownMatchSelectWidth"
+             [nzDropdownClassName]="dropdownClassName"
+             [nzShowSearch]="settings?.searchable"
+             [nzPlaceHolder]="placeholder || '' | translate"
+             [ngClass]="cssClass"
+             [ngStyle]="cssStyle"
+             [disabled]="disabled"
+             [nzDropdownRender]="footerTemplate"
+             [nzOptions]="grouppedOptions"
+             (ngModelChange)="onBlur()"
+             (nzOnSearch)="onSearchTextChange($event)">
+  </nz-select>
+</ng-container>
+<ng-container *ngIf="!grouppedOptions">
+  <nz-select [(ngModel)]="value"
+             nzAllowClear
+             [nzMode]="settings?.mode || DEFAULT_MODE"
+             [nzDropdownMatchSelectWidth]="dropdownMatchSelectWidth"
+             [nzDropdownClassName]="dropdownClassName"
+             [nzShowSearch]="settings?.searchable"
+             [nzPlaceHolder]="placeholder || '' | translate"
+             [ngClass]="cssClass"
+             [ngStyle]="cssStyle"
+             [disabled]="disabled"
+             [nzDropdownRender]="footerTemplate"
+             (ngModelChange)="onBlur()"
+             (nzOnSearch)="onSearchTextChange($event)">
+    <nz-option *ngFor="let option of options"
+               [nzLabel]="option.key | translate"
+               [nzValue]="option.value"></nz-option>
+  </nz-select>
+</ng-container>
+
+<ng-template #footerTemplate>
+  <div *ngIf="buttons">
+    <nz-spin [nzSpinning]="loading">
+      <div class="footer-template">
+        <div class="buttons-area">
+          <rappider-button *ngFor="let button of buttons"
+                           [type]="button?.type"
+                           [shape]="button?.shape"
+                           [text]="button?.text"
+                           [size]="button?.size"
+                           [transparent]="button?.transparent"
+                           [loading]="button?.loading"
+                           [block]="button?.block"
+                           [disabled]="button?.disabled"
+                           [colorType]="button?.colorType"
+                           [icon]="button?.icon"
+                           (click)="onButtonClick(button)">
+          </rappider-button>
+        </div>
+      </div>
+    </nz-spin>
+  </div>
+</ng-template>

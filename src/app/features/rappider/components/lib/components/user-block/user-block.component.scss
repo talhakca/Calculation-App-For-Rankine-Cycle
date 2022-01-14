@@ -1,0 +1,26 @@
+.image {
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+}
+
+.user-image {
+  display: inline-block;
+}
+
+.title {
+  display: inline-block;
+}
+
+.content {
+  display: inline-block;
+}
+
+.container-area {
+  display: inline-block;
+  margin-left: var(--margin-2x);
+}
+
+.container-block {
+  display: flex;
+}

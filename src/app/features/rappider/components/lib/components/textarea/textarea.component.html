@@ -1,0 +1,8 @@
+<textarea nz-input
+          [(ngModel)]="value"
+          [rows]="rows"
+          [ngClass]="cssClass"
+          [ngStyle]="cssStyle"
+          [placeholder]="placeholder || '' | translate"
+          [nzAutosize]="autosize || false"
+          (blur)="onBlur()"></textarea>

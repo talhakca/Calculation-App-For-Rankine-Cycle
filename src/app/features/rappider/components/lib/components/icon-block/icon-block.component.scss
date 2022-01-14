@@ -1,0 +1,21 @@
+.title-area {
+  font-size: 1.25rem;
+  font-weight: lighter;
+  color: #000;
+}
+
+.content-area {
+  display: flex;
+  flex-direction: column;
+  margin-left: var(--margin-4x);
+}
+
+.icon-block-mode-1 {
+  display: flex;
+}
+
+.icon-block-mode-2 {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}

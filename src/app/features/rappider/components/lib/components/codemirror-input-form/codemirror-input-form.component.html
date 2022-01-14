@@ -1,0 +1,27 @@
+<div class="codemirror-input-form">
+  <div class="codemirror-container">
+    <div *ngIf="codemirrorTitle"
+         class="codemirror-toolbar">
+      <pre>{{ codemirrorTitle }}</pre>
+    </div>
+
+    <rappider-codemirror [(ngModel)]="codemirrorContent"
+                         [settings]="codemirrorSettings"></rappider-codemirror>
+  </div>
+
+  <div class="button-container">
+    <rappider-button [text]="button.text"
+                     [type]="button.type"
+                     [shape]="button.shape"
+                     [key]="button.key"
+                     [size]="button.size"
+                     [transparent]="button.transparent"
+                     [loading]="button.loading"
+                     [block]="button.block"
+                     [disabled]="button.disabled"
+                     [colorType]="button.colorType"
+                     [icon]="button.icon"
+                     [danger]="button.danger"
+                     (click)="onButtonClick()"></rappider-button>
+  </div>
+</div>

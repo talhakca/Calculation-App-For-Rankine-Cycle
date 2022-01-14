@@ -1,0 +1,17 @@
+.table-area {
+  border-collapse: collapse;
+}
+
+.product {
+  color: black;
+  padding: var(--padding-4x) var(--padding-6x);
+  border: var(--border-color);
+  background-color: var(--lightest-gray);
+  font-weight: var(--font-weight-medium);
+}
+
+.detail {
+  color: var(--light-text-color);
+  padding: var(--padding-4x) var(--padding-6x);
+  border: var(--border-color);
+}

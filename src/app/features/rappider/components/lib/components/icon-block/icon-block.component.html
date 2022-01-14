@@ -1,0 +1,41 @@
+<div *ngIf="mode === IconBlockModes.Mode1"
+     class="icon-block-mode-1">
+  <div *ngIf="avatar">
+    <rappider-avatar [text]="avatar.text"
+                     [iconName]="avatar.iconName"
+                     [shape]="avatar.shape"
+                     [imageUrl]="avatar.imageUrl"
+                     [altText]="avatar.altText"
+                     [cssStyle]="avatar.cssStyle"
+                     [size]="avatar.size"></rappider-avatar>
+  </div>
+  <div class="content-area">
+    <div class="title-area">
+      {{ title }}
+    </div>
+    <div class="content">
+      <p [innerHTML]="content">
+      </p>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="mode === IconBlockModes.Mode2"
+     class="icon-block-mode-2">
+  <div *ngIf="avatar">
+    <rappider-avatar [text]="avatar.text"
+                     [iconName]="avatar.iconName"
+                     [shape]="avatar.shape"
+                     [imageUrl]="avatar.imageUrl"
+                     [altText]="avatar.altText"
+                     [cssStyle]="avatar.cssStyle"
+                     [size]="avatar.size"></rappider-avatar>
+  </div>
+  <div class="title-area">
+    {{ title }}
+  </div>
+  <div class="content">
+    <p [innerHTML]="content">
+    </p>
+  </div>
+</div>

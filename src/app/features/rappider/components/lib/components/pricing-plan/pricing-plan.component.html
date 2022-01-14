@@ -1,0 +1,45 @@
+<div class="pricing-plan">
+  <div *ngIf="title"
+       class="title-area">
+    <rappider-heading class="title"
+                      [content]="title.content"
+                      [type]="title.type"></rappider-heading>
+  </div>
+  <div *ngIf="subtitle"
+       class="sub-title-area">
+    <rappider-heading class="sub-title"
+                      [content]="subtitle.content"
+                      [type]="subtitle.type"></rappider-heading>
+  </div>
+  <rappider-divider></rappider-divider>
+  <div class="price-area">
+    <span class="price">
+      {{ price }}
+    </span>
+  </div>
+  <div class="price-description-area">
+    <span class="price-description"
+          [innerHTML]="priceDescription"></span>
+  </div>
+  <rappider-divider></rappider-divider>
+  <div class="feature-area">
+    <ng-container *ngFor="let feature of features">
+      <span class="feature"
+            [innerHTML]="feature"></span>
+      <rappider-divider></rappider-divider>
+    </ng-container>
+  </div>
+  <div *ngIf="button"
+       class="button-area">
+    <rappider-button [type]="button.type"
+                     [shape]="button.shape"
+                     [text]="button.text"
+                     [size]="button.size"
+                     [transparent]="button.transparent"
+                     [loading]="button.loading"
+                     [block]="button.block"
+                     [disabled]="button.disabled"
+                     [colorType]="button.colorType"
+                     [icon]="button.icon"></rappider-button>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+.content {
+  font-size: 13px;
+  align-items: center;
+}
+
+.checkbox-button-type {
+  input[type="checkbox"] {
+    display: none;
+  }
+
+  .label {
+    border: 1px solid #edf2f9;
+    display: inline-block;
+    padding: 0.55rem 1.25rem;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: 0.5s;
+    border-radius: 0.25rem;
+
+    &:hover {
+      color: #3f87f5;
+    }
+  }
+
+  input[type="checkbox"]:checked + .label {
+    background: #fff;
+    color: #3f87f5;
+    border-color: #3f87f5;
+  }
+
+  input[type="checkbox"]:disabled + .label {
+    background: rgba(#53535f, 0.5);
+    cursor: not-allowed;
+    &:hover {
+      color: #53535f;
+    }
+  }
+}

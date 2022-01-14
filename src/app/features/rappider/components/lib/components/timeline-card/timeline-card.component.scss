@@ -1,0 +1,24 @@
+.dot-icon{
+    font-size: var(--font-size-x-large);
+}
+.title{
+    font-size: var(--font-size-x-large);
+    display:flex;
+    margin-bottom: var(--margin-2x);
+}
+.subtitle{
+    font-size: var(--font-size-medium);
+    display:flex;
+    margin-bottom: var(--margin-x);
+}
+.items{
+    margin-left: var(--margin-4x);
+}
+.date-area{
+    display: flex;
+    align-items: center;
+}
+.date-icon{
+    font-size: var(--font-size-small);
+    margin-right: var(--margin-2x);
+}

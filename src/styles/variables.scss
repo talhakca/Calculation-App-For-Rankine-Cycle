@@ -1,0 +1,64 @@
+:root {
+  /* colors */
+  --danger-color: red;
+  --success-color: #33cc33;
+  --info-color: cornflowerblue;
+  --warning-color: #ffcc00;
+  --default-color: gray;
+  /* margins */
+  --margin-x: 5px;
+  --margin-2x: 10px;
+  --margin-3x: 15px;
+  --margin-4x: 20px;
+  --margin-5x: 25px;
+  --margin-6x: 30px;
+  --margin-7x: 35px;
+  --margin-8x: 40px;
+  /* paddings */
+  --padding-x: 5px;
+  --padding-2x: 10px;
+  --padding-3x: 15px;
+  --padding-4x: 20px;
+  --padding-5x: 25px;
+  --padding-6x: 30px;
+  --padding-7x: 35px;
+  --padding-8x: 40px;
+  /* heights */
+  --height-x: 50px;
+  --height-2x: 100px;
+  --height-3x: 150px;
+  --height-4x: 200px;
+  --height-5x: 250px;
+  --height-quarter-vh: 25vh;
+  --height-half-vh: 50vh;
+  --height-3quarter-vh: 75vh;
+  --height-full-vh: 100vh;
+  /* widths */
+  --width-x: 50px;
+  --width-2x: 100px;
+  --width-3x: 150px;
+  --width-4x: 200px;
+  --width-5x: 250px;
+  --width-quarter-vw: 25vh;
+  --width-half-vw: 50vh;
+  --width-3quarter-vw: 75vh;
+  --width-full-vw: 100vh;
+  /* font sizes */
+  --font-size-xx-small: xx-small;
+  --font-size-x-small: x-small;
+  --font-size-smaller: smaller;
+  --font-size-small: small;
+  --font-size-medium: medium;
+  --font-size-large: large;
+  --font-size-larger: larger;
+  --font-size-x-large: x-large;
+  --font-size-xx-large: xx-large;
+
+  --font-family-primary: Arial;
+  --font-family-secondary: Arial;
+
+  /* modals */
+  --modal-title-font-size: 20px;
+
+  /* custom styles */
+}

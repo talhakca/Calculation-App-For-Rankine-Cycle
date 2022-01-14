@@ -1,0 +1,8 @@
+<nz-tag *ngIf="text"
+        [nzMode]="mode"
+        [nzColor]="color"
+        [nzChecked]="checked"
+        (nzOnClose)="onTagClose()"
+        (nzCheckedChange)="onCheckChange()">
+  {{ text }}
+</nz-tag>

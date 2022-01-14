@@ -1,0 +1,45 @@
+<div>
+  <a nz-dropdown
+     [nzTrigger]="triggerType"
+     [nzDropdownMenu]="menu"
+     [nzPlacement]="placement">
+    {{ value }}
+    <rappider-icon *ngIf="icon"
+                   [name]="icon.name"
+                   [color]="icon.color"
+                   [theme]="icon.theme"
+                   [type]="icon.type"></rappider-icon>
+  </a>
+
+  <nz-dropdown-menu #menu="nzDropdownMenu">
+    <ul nz-menu>
+      <ng-container *ngTemplateOutlet="recursiveMenuList; context:{ $implicit: items }"></ng-container>
+      <ng-template #recursiveMenuList
+                   let-menus>
+        <ng-container *ngFor="let menu of menus">
+          <div class="menu-item">
+            <div class="menu-item-icon">
+              <rappider-icon *ngIf="menu.icon"
+                             [name]="menu.icon.name"
+                             [color]="menu.icon.color"
+                             [theme]="menu.icon.theme"
+                             [type]="menu.icon.type"></rappider-icon>
+            </div>
+            <li *ngIf="menu.items?.length; else menuItem"
+                nz-submenu
+                [nzTitle]="menu.label | translate"
+                (click)="onMenuItemClick($event, menu)">
+              <ul>
+                <ng-container *ngTemplateOutlet="recursiveMenuList; context:{ $implicit: menu.items }"></ng-container>
+              </ul>
+            </li>
+            <ng-template #menuItem>
+              <li nz-menu-item
+                  (click)="onMenuItemClick($event, menu)"> {{ menu.label | translate }} </li>
+            </ng-template>
+          </div>
+        </ng-container>
+      </ng-template>
+    </ul>
+  </nz-dropdown-menu>
+</div>

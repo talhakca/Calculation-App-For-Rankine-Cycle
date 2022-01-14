@@ -1,0 +1,16 @@
+.main-title {
+  font-size: var(--font-size-large);
+  font-weight: var(--font-weight-medium);
+  margin-bottom: var(--margin-2x);
+}
+
+.title {
+  font-size: var(--font-size-small);
+  display: inline;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}

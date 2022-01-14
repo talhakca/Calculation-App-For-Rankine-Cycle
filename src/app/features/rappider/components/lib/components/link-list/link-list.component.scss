@@ -1,0 +1,17 @@
+.card-container {
+  display: flex;
+}
+
+.button {
+  margin-left: var(--margin-x);
+  margin-bottom: var(--margin-x);
+}
+
+.icon-area {
+  margin-right: var(--margin-x);
+}
+
+.card-area {
+  display: flex;
+  align-items: baseline;
+}

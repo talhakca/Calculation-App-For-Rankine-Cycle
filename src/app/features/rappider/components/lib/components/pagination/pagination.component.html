@@ -1,0 +1,8 @@
+<nz-pagination [nzPageIndex]="pageIndex"
+               [nzTotal]="total"
+               [nzSize]="size || 'default'"
+               [nzPageSize]="pageSize"
+               [nzDisabled]="disabled"
+               [nzSimple]="isSimple"
+               (nzPageIndexChange)="onPageIndexChange($event)"
+               (nzPageSizeChange)="onPageSizeChange($event)"></nz-pagination>

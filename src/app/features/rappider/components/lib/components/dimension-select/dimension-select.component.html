@@ -1,0 +1,11 @@
+<div class="dimension-select">
+  <div class="number-box">
+    <rappider-number-input [(ngModel)]="number"
+                           (ngModelChange)="onNumberChange()"></rappider-number-input>
+  </div>
+  <div class="select">
+    <rappider-select [(ngModel)]="type"
+                     (ngModelChange)="onTypeChange()"
+                     [options]="selectOptions"></rappider-select>
+  </div>
+</div>

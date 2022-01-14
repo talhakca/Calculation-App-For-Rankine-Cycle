@@ -1,0 +1,22 @@
+<div class="area">
+  <div *ngFor="let item of items">
+    <div *ngIf="item.icon"
+         class="icon">
+      <rappider-icon [name]="item.icon.name"
+                     [type]="item.icon.type"
+                     [theme]="item.icon.theme"
+                     [color]="item.icon.color"></rappider-icon>
+    </div>
+    <ng-container *ngIf="routeBehavior === IconTextActionBehavior.Route; else emitTmpl">
+      <a [routerLink]="item.redirectUrl">
+        <rappider-text [content]="item.text"></rappider-text>
+      </a>
+    </ng-container>
+
+    <ng-template #emitTmpl>
+      <a (click)="onItemClick(item)">
+        <rappider-text [content]="item.text"></rappider-text>
+      </a>
+    </ng-template>
+  </div>
+</div>

@@ -1,0 +1,49 @@
+<section>
+  <div class="container-area">
+    <rappider-image *ngIf="backgroundImage"
+                    class="image"
+                    [source]="backgroundImage.source"
+                    [width]="backgroundImage.width"
+                    [alternateText]="backgroundImage.alternateText"></rappider-image>
+    <div *ngIf="tag"
+         class="tag-area">
+      <rappider-tag [text]="tag.text"
+                    [color]="tag.color"
+                    [mode]="tag.mode"
+                    [checked]="tag.checked"></rappider-tag>
+    </div>
+    <div class="main-area">
+      <div class="title-area">
+        <a class="title-link"
+           [routerLink]="titleLink">
+          {{ title }}
+        </a>
+      </div>
+      <div class="content-area">
+        <p [innerHTML]="content"></p>
+      </div>
+      <rappider-divider></rappider-divider>
+      <div class="user-area">
+        <a [routerLink]="sourceLink">
+          <div *ngIf="sourceAvatar"
+               class="img-area">
+            <rappider-avatar class="profile-image"
+                             [text]="sourceAvatar.text"
+                             [iconName]="sourceAvatar.iconName"
+                             [shape]="sourceAvatar.shape"
+                             [imageUrl]="sourceAvatar.imageUrl"
+                             [altText]="sourceAvatar.altText"
+                             [cssStyle]="sourceAvatar.cssStyle"
+                             [size]="sourceAvatar.size">
+            </rappider-avatar>
+          </div>
+          <div class="source-name-area">
+            <span class="font-weight-light">
+              {{ sourceName | uppercase }}
+            </span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

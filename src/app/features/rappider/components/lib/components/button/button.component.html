@@ -1,0 +1,23 @@
+<button *ngIf="text || icon?.name"
+        nz-button
+        [nzType]="type || 'default'"
+        [nzShape]="shape || ''"
+        [nzSize]="size || 'default'"
+        [nzGhost]="transparent"
+        [nzBlock]="block"
+        [nzLoading]="loading"
+        [disabled]="disabled"
+        [ngClass]="colorType"
+        [nzDanger]="danger"
+        type="button">
+  <ng-container *ngIf="icon?.name">
+    <rappider-icon [name]="icon.name"
+                   [color]="icon.color"
+                   [type]="icon.type"
+                   [theme]="icon.theme"></rappider-icon>
+  </ng-container>
+  <ng-container *ngIf="text && icon">&nbsp;</ng-container>
+  <ng-container *ngIf="text">
+    {{ text | translate }}
+  </ng-container>
+</button>

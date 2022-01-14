@@ -1,0 +1,24 @@
+.items-area {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.card-area {
+  margin: var(--margin-3x);
+  text-align: center;
+}
+
+.container-area:hover .image-area {
+  transform: scale(1.2);
+  transition: transform 0.3s;
+}
+
+.image-area {
+  display: flex;
+  justify-content: center;
+}
+
+.item-content-area {
+  padding-top: var(--padding-4x);
+}
