@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 
@@ -14,7 +15,7 @@ export class AppComponent implements OnInit {
   subscriptions: Subscription[];
   user: any;
 
-  constructor(private store: Store<any>) { }
+  constructor(private store: Store<any>, private router: Router) { }
 
   ngOnInit(): void {
     this.subscribeToData();
@@ -36,6 +37,14 @@ export class AppComponent implements OnInit {
         this.user = null;
       }
     })
+  }
+
+  onClickBrand() {
+    if (this.user) {
+      this.router.navigate(['/home']);
+    } else {
+      this.router.navigate(['/auth']);
+    }
   }
 
   logout() {

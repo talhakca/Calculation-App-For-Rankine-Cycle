@@ -1,6 +1,13 @@
 /* container styles */
 
-.main-container {
+.user-input {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+
+    ::ng-deep nz-form-item {
+        justify-content: center;
+    }
 }
 
 /* component styles */
