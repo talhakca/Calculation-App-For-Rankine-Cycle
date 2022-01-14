@@ -1,9 +1,11 @@
 <div id="main-container"
      class="flex col-12 flex-direction-row flex-wrap main-container">
-   <!-- Component ID: 93b7ef31-db2e-44ac-b4ab-720f31cad64e -->
-   <rappider-crud-view-edit-form id="rappider-edit-form-component-0"
-                                 class="rappider-edit-form-component-0"
-                                 [config]="RappiderEditFormComponent_0.config"
-                                 [data]="variables"
-                                 (formSubmit)="onVariablesSubmit($event)"></rappider-crud-view-edit-form>
+  <!-- Component ID: 93b7ef31-db2e-44ac-b4ab-720f31cad64e -->
+  <rappider-crud-view-edit-form id="rappider-edit-form-component-0"
+                                class="rappider-edit-form-component-0"
+                                [config]="RappiderEditFormComponent_0.config"
+                                [data]="variables"
+                                (formSubmit)="onVariablesSubmit($event)"></rappider-crud-view-edit-form>
+  {{ variables | json}}
+  result : {{calculate()}}
 </div>

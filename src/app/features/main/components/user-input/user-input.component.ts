@@ -14,6 +14,7 @@ import { Project } from 'src/app/features/shared/sdk/models';
 import { ProjectControllerService } from 'src/app/features/shared/sdk/services';
 import { GetProject } from 'src/app/features/data-stores/project-data-store/state/project-data-store.actions';
 import { InitApp } from 'src/app/features/data-stores/app-data-store/state/app-data-store.actions';
+import { tables } from 'src/app/features/shared/definitions';
 
 @Component({
   selector: 'user-input',
@@ -63,10 +64,12 @@ export class UserInputPageComponent implements OnInit, OnDestroy {
   };
 
   projectId: string;
-  variables: Record<string, unknown>;
+  variables: Record<string, number>;
 
   /* state subscriptions */
   subscriptions: Subscription[];
+
+  tables = tables;
 
   constructor(
     private store: Store<any>,
@@ -77,7 +80,6 @@ export class UserInputPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getProjectIdFromUrl();
     this.subscribeToData();
-
   }
 
   ngOnDestroy(): void {
@@ -101,10 +103,25 @@ export class UserInputPageComponent implements OnInit, OnDestroy {
   }
 
   onVariablesSubmit(variables) {
-    console.log(variables);
-
     this.projectApi.updateById({ id: this.projectId, body: { variables: variables } }).subscribe(() => {
       this.store.dispatch(InitApp());
     })
+  }
+
+  calculate() {
+    const equalKpaWithP1 = tables.A5.find(item => item.kPa === 10)
+
+
+    if (equalKpaWithP1) {
+      const h1 = equalKpaWithP1.hf;
+      const S1 = equalKpaWithP1.sf;
+      const sfg = equalKpaWithP1.sfg;
+      const hfg = equalKpaWithP1.hfg;
+      const v1 = equalKpaWithP1.vf;
+
+      return `Wpumpin is ${v1 * (this.variables?.p2 - this.variables?.p1)}`;
+    } else {
+      return 'We could not determine your result with given variables';
+    }
   }
 }

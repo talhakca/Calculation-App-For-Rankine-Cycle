@@ -5,3 +5,4 @@ export * from './page-definitions';
 export * from './path-definitions';
 export * from './auth-redirection-definitions';
 export * from './language';
+export * from './tables';
